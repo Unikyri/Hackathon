@@ -8,4 +8,5 @@ import (
 // SetupRoutes configura las rutas de la API
 func SetupRoutes(app *fiber.App) {
 	app.Get("/ping", handlers.PingHandler)
+
 }
