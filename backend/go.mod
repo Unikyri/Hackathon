@@ -2,7 +2,10 @@ module Hackathon
 
 go 1.23
 
-require github.com/gofiber/fiber/v2 v2.49.0
+require (
+	github.com/gofiber/fiber/v2 v2.49.0
+	github.com/lib/pq v1.10.9
+)
 
 require (
 	github.com/andybalholm/brotli v1.1.1 // indirect
