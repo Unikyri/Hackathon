@@ -9,7 +9,7 @@ export default function MainNavigation() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/home" element={<Home />} />
+                <Route path="/home" element={<Home/>} />
                 <Route path="/user-admin" element={<UserAdmin />} />
                 <Route path="/GestionPlanEstudio" element={<GestionPlanEstudio />} />
                 <Route path="*" element={<PageNotFound />} />
