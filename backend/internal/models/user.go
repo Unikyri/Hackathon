@@ -6,9 +6,9 @@ type Usuario struct {
 	Contrasenia string  `gorm:"not null"`
 	Longitud    float64 `gorm:"not null"`
 	Latitud     float64 `gorm:"not null"`
-	Telefono    string
-	Nombre      string `gorm:"not null"`
-	Rol         string `gorm:"not null"`
+	Telefono    string  `gorm:"not null"`
+	Nombre      string  `gorm:"not null"`
+	Rol         string  `gorm:"not null"`
 	Foto        string
 	Descripcion string
 	Productos   []Producto     `gorm:"foreignKey:FKUsuario"`
