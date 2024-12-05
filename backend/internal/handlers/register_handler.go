@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"Hackathon/db"
+	"Hackathon/internal/models"
 	"github.com/gofiber/fiber/v2"
 )
 
-// Register crea un nuevo usuario.
+// Register maneja el registro de usuarios.
 func Register(c *fiber.Ctx) error {
 	type RegisterRequest struct {
 		Username string `json:"username"`
@@ -19,19 +20,19 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
-	// Hashea la contraseña
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
-	if err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "no se pudo procesar la contraseña",
+	// Verifica si el usuario ya existe
+	var existingUser models.User
+	if err := db.DB.Where("username = ?", req.Username).First(&existingUser).Error; err == nil {
+		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
+			"error": "el usuario ya existe",
 		})
 	}
 
+	// Crea y guarda el nuevo usuario
 	user := models.User{
 		Username: req.Username,
-		Password: string(hashedPassword),
+		Password: req.Password, // Contraseña en texto plano
 	}
-
 	if err := db.DB.Create(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "no se pudo registrar el usuario",

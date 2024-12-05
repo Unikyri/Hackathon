@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// Login valida las credenciales de un usuario.
+// Login maneja el inicio de sesión de usuarios.
 func Login(c *fiber.Ctx) error {
 	type LoginRequest struct {
 		Username string `json:"username"`
@@ -20,15 +20,9 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
+	// Busca al usuario por su username
 	var user models.User
-	if err := db.DB.Where("username = ?", req.Username).First(&user).Error; err != nil {
-		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"error": "usuario o contraseña incorrectos",
-		})
-	}
-
-	// Verifica la contraseña
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+	if err := db.DB.Where("username = ? AND password = ?", req.Username, req.Password).First(&user).Error; err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": "usuario o contraseña incorrectos",
 		})
