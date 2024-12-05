@@ -7,6 +7,7 @@ import (
 
 // SetupRoutes configura las rutas de la API
 func SetupRoutes(app *fiber.App) {
-	app.Get("/ping", handlers.PingHandler)
+	app.Post("/register", handlers.Register) // Ruta para registrar usuarios
+	app.Post("/login", handlers.Login)       // Ruta para iniciar sesión
 
 }

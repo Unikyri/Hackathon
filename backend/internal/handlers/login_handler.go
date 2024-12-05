@@ -21,7 +21,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	// Busca al usuario por su username
-	var user models.User
+	var user models.Usuario
 	if err := db.DB.Where("username = ? AND password = ?", req.Username, req.Password).First(&user).Error; err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": "usuario o contraseña incorrectos",
@@ -30,6 +30,7 @@ func Login(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"message": "inicio de sesión exitoso",
-		"user":    user.Username,
+		"user":    user.ID,
+		"rol":     user.Rol,
 	})
 }

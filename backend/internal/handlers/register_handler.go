@@ -21,7 +21,7 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	// Verifica si el usuario ya existe
-	var existingUser models.User
+	var existingUser models.Usuario
 	if err := db.DB.Where("username = ?", req.Username).First(&existingUser).Error; err == nil {
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
 			"error": "el usuario ya existe",
@@ -29,9 +29,9 @@ func Register(c *fiber.Ctx) error {
 	}
 
 	// Crea y guarda el nuevo usuario
-	user := models.User{
+	user := models.Usuario{
 		Username: req.Username,
-		Password: req.Password, // Contraseña en texto plano
+		Password: req.Password, // Contrasenia en texto plano
 	}
 	if err := db.DB.Create(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
