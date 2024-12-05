@@ -9,8 +9,15 @@ import (
 // Register maneja el registro de usuarios.
 func Register(c *fiber.Ctx) error {
 	type RegisterRequest struct {
-		Username string `json:"username"`
-		Password string `json:"password"`
+		Nombre      string  `json:"nombre"`
+		Contrasenia string  `json:"contrasenia"`
+		Longitud    float64 `json:"longitud"`
+		Latitud     float64 `json:"latitud"`
+		Correo      string  `json:"correo"`
+		Telefono    string  `json:"telefono"`
+		Rol         string  `json:"rol"`
+		Foto        []byte  `json:"foto"`
+		Descripcion string  `json:"descripcion"`
 	}
 
 	var req RegisterRequest
@@ -22,16 +29,16 @@ func Register(c *fiber.Ctx) error {
 
 	// Verifica si el usuario ya existe
 	var existingUser models.Usuario
-	if err := db.DB.Where("username = ?", req.Username).First(&existingUser).Error; err == nil {
+	if err := db.DB.Where("username = ?", req.Correo).First(&existingUser).Error; err == nil {
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
-			"error": "el usuario ya existe",
+			"error": "el correo se ha ingresado anteriormente en el sistema",
 		})
 	}
 
 	// Crea y guarda el nuevo usuario
 	user := models.Usuario{
-		Username: req.Username,
-		Password: req.Password, // Contrasenia en texto plano
+		Correo:      req.Correo,
+		Contrasenia: req.Contrasenia,
 	}
 	if err := db.DB.Create(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
