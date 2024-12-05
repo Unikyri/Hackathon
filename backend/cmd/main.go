@@ -12,7 +12,7 @@ import (
 func main() {
 	// Inicia la conexión a la base de datos
 	db.InitDB()
-	defer db.DB.Close()
+	defer db.CerrarDB()
 
 	// Ejecuta las migraciones
 	if err := runMigrations(); err != nil {
