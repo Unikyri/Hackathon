@@ -39,6 +39,12 @@ func Register(c *fiber.Ctx) error {
 	user := models.Usuario{
 		Correo:      req.Correo,
 		Contrasenia: req.Contrasenia,
+		Longitud:    req.Longitud,
+		Latitud:     req.Latitud,
+		Nombre:      req.Nombre,
+		Telefono:    req.Telefono,
+		Rol:         req.Rol,
+		Foto:        req.Foto,
 	}
 	if err := db.DB.Create(&user).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
