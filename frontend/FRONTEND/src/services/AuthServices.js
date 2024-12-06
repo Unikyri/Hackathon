@@ -1,6 +1,6 @@
 import { BASE_URL } from "../environment";
 
-export const GetAccessToken = async ({ username, password }) => {
+export const GetAccessToken = async ({ email, password }) => {
     try {
         const response = await fetch(`${BASE_URL}/autenticar/login`, {
             method: "POST",
@@ -8,7 +8,7 @@ export const GetAccessToken = async ({ username, password }) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                usuario: username,
+                correo: email,
                 contrasena: password,
             }),
         });
