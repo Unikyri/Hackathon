@@ -20,7 +20,7 @@ func main() {
 		log.Fatalf("Error al ejecutar migraciones: %v\n", err)
 	}
 
-	log.Println("Servidor listo para iniciar...")
+	log.Println("Servidor listo para iniciar y desplegado...")
 
 	// Inicializa el servidor Fiber
 	app := fiber.New()
