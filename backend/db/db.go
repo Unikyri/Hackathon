@@ -14,7 +14,7 @@ var DB *gorm.DB
 func InitDB() {
 	// Cadena de conexión
 	connStr := fmt.Sprintf(
-		"host=192.168.140.128 port=5432 user=hackathon password=hack15243 dbname=reto2 sslmode=disable",
+		"host=192.168.1.107 port=5432 user=hackathon password=hack15243 dbname=reto2 sslmode=disable",
 	)
 
 	// Intentar abrir la conexión usando GORM v2
