@@ -29,7 +29,7 @@ func main() {
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
 	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
-	err := app.Listen("192.168.140.128:8080") // Cambié el puerto a 8080
+	err := app.Listen("192.168.1.107:8080") // Cambié el puerto a 8080
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}

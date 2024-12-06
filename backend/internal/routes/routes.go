@@ -7,6 +7,13 @@ import (
 
 // SetupRoutes configura las rutas de la API
 func SetupRoutes(app *fiber.App) {
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.JSON(fiber.Map{
+			"message": "¡Bienvenido a la API de Hackathon!",
+		})
+	})
+
 	//Registro y Login
 	app.Post("/register", handlers.Register)
 	app.Post("/login", handlers.Login)
