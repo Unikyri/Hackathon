@@ -4,16 +4,27 @@ import (
 	"Hackathon/db"
 	"Hackathon/internal/models"
 	"github.com/gofiber/fiber/v2"
+	"log"
+	"strconv"
 )
 
 // ObtenerInfoUsuario recibe el nombre de usuario como parámetro y retorna toda su información.
 func ObtenerInfoUsuario(c *fiber.Ctx) error {
 	// Parámetro de entrada: nombre del usuario
-	usuarioNombre := c.Params("nombre") // Obtener el nombre de usuario desde la URL
+	idUsuarioStr := c.Params("id") // Obtener el nombre de usuario desde la URL
+
+	// Convertir el ID del usuario de string a uint
+	usuarioID, err := strconv.ParseUint(idUsuarioStr, 10, 32) // Convertimos a uint
+	if err != nil {
+		log.Println("Error al convertir el ID de usuario:", err)
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "ID de usuario inválido",
+		})
+	}
 
 	// Buscar el usuario por nombre
 	var usuario models.Usuario
-	if err := db.DB.Where("nombre = ?", usuarioNombre).First(&usuario).Error; err != nil {
+	if err := db.DB.Where("id = ?", usuarioID).First(&usuario).Error; err != nil {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
 			"error": "Usuario no encontrado",
 		})
