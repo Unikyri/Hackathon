@@ -20,5 +20,5 @@ Este es el repositorio de la solución tecnológica del reto 2 relacionada a Tur
 
 **Client:** React, TailwindCSS
 
-**Server:** Gorm, Fiver, Air, Gin
+**Server:** Gorm, Fiber, Air, Gin
 
