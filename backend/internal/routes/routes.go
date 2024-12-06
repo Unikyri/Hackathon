@@ -16,4 +16,7 @@ func SetupRoutes(app *fiber.App) {
 	app.Get("/profileVisualizer", handlers.ObtenerInfoUsuario)
 	app.Get("/favoriteVisualizer", handlers.ObtenerFavoritos)
 
+	//Editar información del perfil
+	app.Post("/profileEdition/changePicture", handlers.CambiarFotoUsuario)
+	app.Post("/profileEdition/changeDescription", handlers.ModificarDescripcion)
 }
