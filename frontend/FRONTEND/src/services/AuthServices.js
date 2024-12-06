@@ -1,15 +1,59 @@
 import { BASE_URL } from "../environment";
 
-export const GetAccessToken = async ({ email, password }) => {
+export const RegisterUser = async ({
+    nombre,
+    contrasenia,
+    longitud,
+    latitud,
+    correo,
+    telefono,
+    rol,
+    foto,
+    descripcion,
+}) => {
     try {
-        const response = await fetch(`${BASE_URL}/autenticar/login`, {
+        const response = await fetch(`${BASE_URL}/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                correo: email,
-                contrasena: password,
+                nombre,
+                contrasenia,
+                longitud,
+                latitud,
+                correo,
+                telefono,
+                rol,
+                foto,
+                descripcion,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Usuario registrado:", data);
+
+        return data; // Retornar la respuesta del servidor
+    } catch (error) {
+        console.error("Error registrando usuario:", error);
+        return null;
+    }
+};
+
+export const AuthenticateUser = async ({ correo, password }) => {
+    try {
+        const response = await fetch(`${BASE_URL}/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                correo,
+                password,
             }),
         });
 
@@ -27,32 +71,7 @@ export const GetAccessToken = async ({ email, password }) => {
 
         return { token, payload }; // Retornar el JWT y la carga útil
     } catch (error) {
-        console.error("Error obteniendo el token de acceso:", error);
-    }
-};
-
-// Función para decodificar la carga útil (payload) de un token JWT
-const decodeJwtPayload = (token) => {
-    try {
-        // Dividir el token en sus partes (header, payload, signature)
-        const parts = token.split(".");
-        if (parts.length !== 3) {
-            throw new Error("Invalid JWT format");
-        }
-
-        // Decodificar la carga útil (segunda parte del token)
-        const base64Url = parts[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split("")
-                .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-                .join("")
-        );
-
-        return JSON.parse(jsonPayload); // Convertir a objeto JavaScript
-    } catch (error) {
-        console.error("Error decodificando el JWT:", error);
+        console.error("Error autenticando usuario:", error);
         return null;
     }
 };
