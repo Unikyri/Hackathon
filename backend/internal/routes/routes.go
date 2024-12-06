@@ -22,5 +22,5 @@ func SetupRoutes(app *fiber.App) {
 
 	//Gestionar publicaciones
 	app.Post("/postCreation", handlers.CrearPublicacion)
-	app.Get("postDelete", handlers.BorrarPublicacion)
+	app.Get("/postDelete", handlers.BorrarPublicacion)
 }
