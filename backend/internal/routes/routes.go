@@ -7,6 +7,11 @@ import (
 
 // SetupRoutes configura las rutas de la API
 func SetupRoutes(app *fiber.App) {
+
+	//Ruta principal
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, world!")
+
 	//Registro y Login
 	app.Post("/register", handlers.Register)
 	app.Post("/login", handlers.Login)
