@@ -9,8 +9,8 @@ import (
 // Login maneja el inicio de sesión de usuarios.
 func Login(c *fiber.Ctx) error {
 	type LoginRequest struct {
-		Correo   string `json:"correo"`
-		Password string `json:"password"`
+		Correo      string `json:"correo"`
+		Contrasenia string `json:"password"`
 	}
 
 	var req LoginRequest
@@ -22,7 +22,7 @@ func Login(c *fiber.Ctx) error {
 
 	// Busca al usuario por su username
 	var user models.Usuario
-	if err := db.DB.Where("correo = ? AND contrasenia = ?", req.Correo, req.Password).First(&user).Error; err != nil {
+	if err := db.DB.Where("correo = ? AND contrasenia = ?", req.Correo, req.Contrasenia).First(&user).Error; err != nil {
 		return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
 			"error": "usuario o contraseña incorrectos",
 		})

@@ -29,7 +29,7 @@ func Register(c *fiber.Ctx) error {
 
 	// Verifica si el usuario ya existe
 	var existingUser models.Usuario
-	if err := db.DB.Where("username = ?", req.Correo).First(&existingUser).Error; err == nil {
+	if err := db.DB.Where("correo = ?", req.Correo).First(&existingUser).Error; err == nil {
 		return c.Status(fiber.StatusConflict).JSON(fiber.Map{
 			"error": "el correo se ha ingresado anteriormente en el sistema",
 		})
