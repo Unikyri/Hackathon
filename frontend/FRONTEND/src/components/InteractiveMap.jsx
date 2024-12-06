@@ -87,7 +87,7 @@ const InteractiveMap = () => {
 
     // Agregar marcadores para otras ubicaciones
     places.forEach((location) => {
-      const { latitude, longitude, name, imageUrl, profileUrl } = location;
+      const { latitude, longitude, name, imageUrl} = location;
 
       const el = document.createElement('div');
       el.className = 'custom-marker';
@@ -113,8 +113,8 @@ const InteractiveMap = () => {
       marker.getElement().addEventListener('mouseleave', () => popup.remove());
 
       marker.getElement().addEventListener('click', () => {
-        window.location.href = `localhost:8080/profile/${name}`;
-        console.log('Redirigiendo a:', `localhost:8080/profile/${name}`);
+        window.location.href = `http://localhost:5173/profile/${name}`;
+        console.log('Redirigiendo a:', `http://localhost:5173/profile/${name}`);
       });
     });
 

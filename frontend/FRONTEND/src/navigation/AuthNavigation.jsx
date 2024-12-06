@@ -18,7 +18,7 @@ export default function AuthNavigation() {
                 <Route path="/home" element={<Home />} />
                 <Route path="*" element={<DeniedPage />} />
                 <Route path="/favoritos" element={<FavouritesSeller />} />
-                <Route path="/:name" element={<UserProfile />} />
+                <Route path="/profile/:name" element={<UserProfile />} />
             </Routes>
         </BrowserRouter>
     );

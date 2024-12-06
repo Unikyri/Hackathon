@@ -12,8 +12,8 @@ export default function Navbar() {
         className="flex items-center"
       >
         <img
-          src="https://via.placeholder.com/40"
-          alt="Logo"
+          src="https://cdn.icon-icons.com/icons2/1875/PNG/512/hamburgermenu_120234.png"
+          alt="Menu-logo"
           className="w-10 h-10"
         />
       </button>

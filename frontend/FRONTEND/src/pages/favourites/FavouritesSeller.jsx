@@ -7,13 +7,13 @@ const FavouritesSeller = () => {
     {
       name: 'juan123',
       photoUrl: 'https://via.placeholder.com/150',
-      productName: 'Café orgánico',
+      productName: 'Carne de res fresca',
       rating: 4.5,
     },
     {
       name: 'maria456',
       photoUrl: 'https://via.placeholder.com/150',
-      productName: 'Miel de abejas',
+      productName: 'Pecho de res',
       rating: 4.8,
     },
   ];
