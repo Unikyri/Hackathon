@@ -61,17 +61,22 @@ export const AuthenticateUser = async ({ correo, password }) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Obtener el token como texto (JWT)
-        const token = await response.text();
-        console.log("JWT Token:", token);
+        // Obtener la respuesta JSON que contiene el mensaje, rol y usuario
+        const data = await response.json();
 
-        // Decodificar la carga útil (payload)
-        const payload = decodeJwtPayload(token);
-        console.log("Payload:", payload);
-
-        return { token, payload }; // Retornar el JWT y la carga útil
+        if (data.message === "inicio de sesión exitoso") {
+            console.log("Usuario autenticado:", data);
+            return {
+                success: true,
+                user: data.user,
+                role: data.rol,
+            };
+        } else {
+            console.error("Error en la autenticación:", data.message);
+            return { success: false, message: data.message };
+        }
     } catch (error) {
         console.error("Error autenticando usuario:", error);
-        return null;
+        return { success: false, message: "Hubo un error al autenticar al usuario" };
     }
 };

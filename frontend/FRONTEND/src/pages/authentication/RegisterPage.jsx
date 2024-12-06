@@ -8,6 +8,7 @@ import {
 	CardBody,
 	CardHeader,
 } from '@nextui-org/react';
+import { RegisterUser } from '../../services/AuthServices';
 
 export default function RegisterPage() {
 	const [userData, setUserData] = useState({
@@ -55,39 +56,29 @@ export default function RegisterPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		const { nombre, rol, telefono, correo, contraseña, coordenadas, imagen, descripcion } = userData;
-
-		const requestBody = {
-			nombre: nombre, 
-			rol: roles[rol],
-			telefono: telefono,
-			correo: correo,
-			contraseña: contraseña,
-			coordenadas: coordenadas, 
-			imagen: imagen,
-			descripcion: descripcion
-		};
-
-		try {
-			const response = await fetch('http://localhost:3001/api/subscribe', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(requestBody),
-			});
-
-			if (response.ok) {
-				console.log('Solicitud exitosa', await response.json());
-				Alert.alert("Su registro fue exitoso.")
-			} else {
-				console.error('Error en la solicitud', response.statusText);
-			}
-		} catch (error) {
-			console.error('Error de red', error);
+	
+		const { nombre, rol, telefono, correo, contraseña, imagen, descripcion } = userData;
+		const { latitude, longitude } = coordinates;
+	
+		// Llamada al servicio RegisterUser
+		const response = await RegisterUser({
+		  nombre,
+		  contrasenia: contraseña,
+		  longitud: longitude,
+		  latitud: latitude,
+		  correo,
+		  telefono,
+		  rol,
+		  foto: imagen, // Asegúrate de manejar la foto si la subes
+		  descripcion
+		});
+	
+		if (response) {
+		  alert('Registro exitoso: ' + response.message);
+		} else {
+		  alert('Error al registrar el usuario.');
 		}
-	};
+	  };
 
 	return (
 		<div className="container bg-gray mx-auto p-4">
@@ -117,10 +108,10 @@ export default function RegisterPage() {
 							value={userData.rol}
 							onChange={(e) => handleSelectChange('rol', e.target.value)}
 							required
-							className="bg-gray-100"
+							className="bg-gray-100 "
 						>
 							{roles.map((tipo, index) => (
-								<SelectItem className=' bg-pink hover:bg-gray-700' key={index} value={tipo}>
+								<SelectItem className=' bg-pink text-black hover:bg-gray-700' key={index} value={tipo}>
 									{tipo.charAt(0).toUpperCase() + tipo.slice(1)}
 								</SelectItem>
 							))}
