@@ -1,13 +1,11 @@
-import Layout from "../../layouts/UserLayout";
 
-const Home = ()=> {
+import Vendedor from '../perfil/Vendedor';
+
+const Test = ()=> {
     return (
-        <>
-        <Layout>
-            
-        </Layout>
-        </>
+        <Vendedor>
+        </Vendedor>
     )
 }
 
-export default Home ;
+export default Test ;
