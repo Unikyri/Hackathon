@@ -15,16 +15,16 @@ jobs:
       - name: Set up SSH key
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
       - name: Deploy to VPS
         run: |
-          ssh -o StrictHostKeyChecking=no github-actions@34.51.10.74 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             # Detener la aplicación existente (si está corriendo)
             sudo pkill main || true
 
             # Navegar al directorio del proyecto
-            cd /home/jeaqhbo/Hackathon/Hackathon/backend
+            cd /home/github-actions/Hackathon/Hackathon/backend
 
             # Resetear los cambios locales y hacer pull de la rama backend
             sudo git reset --hard
