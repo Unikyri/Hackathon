@@ -68,11 +68,12 @@ export default function Login() {
     return (
 
         <div className="flex items-center justify-center bg-white w-full h-full">
-            <div className="bg-red-100 p-8 rounded-lg shadow-lg max-w-md w-full">
+
+            <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-md w-full">
                 <div className="flex justify-center mb-6">
-                    <img src="./logo.png" className="w-24 h-24" />
+                    <img src="./logo-web.png" className="w-40 h-40" />
                 </div>
-                <h2 className="text-2xl font-semibold text-center text-red-700 mb-6">Iniciar Sesión</h2>
+                <h2 className="text-2xl font-semibold text-center text-blue-700 mb-6">Iniciar Sesión</h2>
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <Input
                         color="secondary"
@@ -83,7 +84,9 @@ export default function Login() {
                         required
                         fullWidth
                         size="lg"
-                        className="bg-red-100 text-red-200"
+
+                        className="bg-gray-100 text-gray-200"
+
                     />
                     <Input
                         color="secondary"
