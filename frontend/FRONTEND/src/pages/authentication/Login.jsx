@@ -68,6 +68,7 @@ export default function Login() {
     return (
 
         <div className="flex items-center justify-center bg-white w-full h-full">
+
             <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-md w-full">
                 <div className="flex justify-center mb-6">
                     <img src="./logo-web.png" className="w-40 h-40" />
@@ -83,7 +84,9 @@ export default function Login() {
                         required
                         fullWidth
                         size="lg"
+
                         className="bg-gray-100 text-gray-200"
+
                     />
                     <Input
                         color="secondary"
