@@ -22,7 +22,7 @@ export default function Header() {
 
 			<NavbarContent className="hidden sm:flex gap-4" justify="center">
 				<NavbarItem>
-					<Link href="#" className="text-white">
+					<Link href="/Map" className="text-white">
 						Inicio
 					</Link>
 				</NavbarItem>
