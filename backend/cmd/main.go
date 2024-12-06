@@ -26,7 +26,7 @@ func main() {
 
 	// Configura las rutas
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("¡Probando si funciona la automatización")
+		return c.SendString("¡Probando si funciona la automatización (2)")
 	})
 
 	// Inicia el servidor en la IP externa (0.0.0.0) y puerto 10000
