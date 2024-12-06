@@ -14,5 +14,6 @@ func SetupRoutes(app *fiber.App) {
 	//Visualizacion de interfaz
 	app.Get("/userVisualizer", handlers.VisualizarUsuarios)
 	app.Get("/profileVisualizer", handlers.ObtenerInfoUsuario)
+	app.Get("/favoriteVisualizer", handlers.ObtenerFavoritos)
 
 }
