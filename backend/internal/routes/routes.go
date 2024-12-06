@@ -19,4 +19,8 @@ func SetupRoutes(app *fiber.App) {
 	//Editar información del perfil
 	app.Post("/profileEdition/changePicture", handlers.CambiarFotoUsuario)
 	app.Post("/profileEdition/changeDescription", handlers.ModificarDescripcion)
+
+	//Gestionar publicaciones
+	app.Post("/postCreation", handlers.CrearPublicacion)
+	app.Get("postDelete", handlers.BorrarPublicacion)
 }
