@@ -1,11 +1,11 @@
 package models
 
 type Producto struct {
-	ID        uint    `gorm:"primaryKey"`
-	FKUsuario uint    `gorm:"not null"`
-	Precio    float64 `gorm:"not null"`
-	Cantidad  int     `gorm:"not null"`
-	Categoria string  `gorm:"not null"`
-	Imagenes  string  // Puedes usar un tipo como string o array de strings si tienes múltiples imágenes
-	Usuario   Usuario `gorm:"foreignKey:FKUsuario"`
+	ID        uint    `gorm:"primaryKey;autoIncrement"` // ID como clave primaria, autoincrementable
+	UsuarioID uint    `gorm:"not null"`                 // Llave foránea hacia Usuario (referencia al campo ID de Usuario)
+	Usuario   Usuario `gorm:"foreignKey:UsuarioID"`     // Relación con el modelo Usuario
+	Foto      []byte  `gorm:"type:bytea"`               // Foto del producto como tipo bytea
+	Precio    float64 `gorm:"not null"`                 // Precio del producto (puedes ajustar esto según el tipo de moneda)
+	Cantidad  int     `gorm:"not null"`                 // Cantidad disponible del producto
+	Categoria string  `gorm:"not null"`                 // Categoría del producto
 }
