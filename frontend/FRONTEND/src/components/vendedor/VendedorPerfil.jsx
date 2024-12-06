@@ -1,4 +1,4 @@
-import { Metadata } from "./Metadata";
+import { MetadataHome } from "./MetadataHome";
 import { Productos } from "./Productos";
 import { Publicaciones } from "./Publicaciones";
 
@@ -20,7 +20,7 @@ export default function VendedorPerfil() {
     <div className="mx-auto p-6 bg-white w-full h-full">
       <div className="flex gap-6">
         {/* Metadata Section */}
-        <Metadata />
+        <MetadataHome />
         {/* Right Column */}
         <div className="w-2/3 space-y-6">
           <Productos productos={productosMock} />

@@ -1,6 +1,10 @@
-import { User } from "lucide-react";
+import { Star, User } from 'lucide-react';
 
 export function Metadata() {
+  const handleAddToFavorites = () => {
+    console.log('Este usuario ha sido agregado a favoritos');
+  };
+
   return (
     <div className="w-1/3 space-y-4">
       {/* Photo Section */}
@@ -26,18 +30,24 @@ export function Metadata() {
         <h2 className="font-semibold text-lg mb-2">CALIFICACIÓN</h2>
         <div className="flex items-center space-x-1">
           {[1, 2, 3, 4, 5].map((star) => (
-            <svg
+            <Star
               key={star}
               className="w-5 h-5 text-yellow-400"
-              xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-            </svg>
+            />
           ))}
           <span className="ml-2 text-gray-600">4.8/5.0</span>
         </div>
+      </div>
+
+      {/* Add to Favorites Button */}
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={handleAddToFavorites}
+          className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
+        >
+          Agregar a Favoritos
+        </button>
       </div>
     </div>
   );

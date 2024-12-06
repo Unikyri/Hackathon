@@ -1,6 +1,6 @@
 import { Star, User } from 'lucide-react';
 
-export function Metadata() {
+export function MetadataHome() {
   const handleAddToFavorites = () => {
     console.log('Este usuario ha sido agregado a favoritos');
   };

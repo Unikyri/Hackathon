@@ -1,11 +1,10 @@
 
-import Comprador from '../perfil/Comprador';
+import Vendedor from '../perfil/Vendedor';
 
 const Test = ()=> {
     return (
-        <Comprador>
-
-        </Comprador>
+        <Vendedor>
+        </Vendedor>
     )
 }
 

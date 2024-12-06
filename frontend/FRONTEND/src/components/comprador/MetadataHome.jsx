@@ -1,10 +1,6 @@
 import { Star, User } from 'lucide-react';
 
-export function Metadata() {
-  const handleAddToFavorites = () => {
-    console.log('Este usuario ha sido agregado a favoritos');
-  };
-
+export function MetadataHome() {
   return (
     <div className="w-1/3 space-y-4">
       {/* Photo Section */}
@@ -38,16 +34,6 @@ export function Metadata() {
           ))}
           <span className="ml-2 text-gray-600">4.8/5.0</span>
         </div>
-      </div>
-
-      {/* Add to Favorites Button */}
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={handleAddToFavorites}
-          className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
-        >
-          Agregar a Favoritos
-        </button>
       </div>
     </div>
   );
