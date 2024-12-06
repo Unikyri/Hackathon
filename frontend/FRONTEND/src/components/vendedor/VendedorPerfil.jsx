@@ -1,79 +1,32 @@
-import { Star, User } from 'lucide-react'
+import { Metadata } from "./Metadata";
+import { Productos } from "./Productos";
+import { Publicaciones } from "./Publicaciones";
+
+const productosMock = [
+  { id: 1, nombre: "Producto 1", precio: 99.99 },
+  { id: 2, nombre: "Producto 2", precio: 49.99 },
+  { id: 3, nombre: "Producto 3", precio: 149.99 },
+  { id: 4, nombre: "Producto 4", precio: 199.99 },
+];
+
+const publicacionesMock = [
+  { id: 1, titulo: "Publicación 1", contenido: "Contenido de la publicación 1." },
+  { id: 2, titulo: "Publicación 2", contenido: "Contenido de la publicación 2." },
+  { id: 3, titulo: "Publicación 3", contenido: "Contenido de la publicación 3." },
+];
 
 export default function VendedorPerfil() {
   return (
-    <div className=" mx-auto p-6 bg-white w-full h-full">
+    <div className="mx-auto p-6 bg-white w-full h-full">
       <div className="flex gap-6">
-        {/* Left Column */}
-        <div className=" w-1/3  space-y-4">
-          {/* Photo Section */}
-          <div className="flex justify-center">
-            <div className="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
-              <User className="w-16 h-16 text-gray-400" />
-            </div>
-          </div>
-
-          {/* Metadata Section */}
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="font-semibold text-lg mb-2">METADATA</h2>
-            <div className="space-y-2 text-gray-600">
-              <p>Nombre: Juan Pérez</p>
-              <p>Email: juan@ejemplo.com</p>
-              <p>Ubicación: Ciudad</p>
-              <p>Miembro desde: 2023</p>
-            </div>
-          </div>
-
-          {/* Rating Section */}
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="font-semibold text-lg mb-2">CALIFICACIÓN</h2>
-            <div className="flex items-center space-x-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className="w-5 h-5 text-yellow-400"
-                  fill="currentColor"
-                />
-              ))}
-              <span className="ml-2 text-gray-600">4.8/5.0</span>
-            </div>
-          </div>
-        </div>
-
+        {/* Metadata Section */}
+        <Metadata />
         {/* Right Column */}
         <div className="w-2/3 space-y-6">
-          {/* Products Section */}
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="font-semibold text-lg mb-4">PRODUCTOS</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4].map((product) => (
-                <div key={product} className="border rounded-lg p-3">
-                  <div className="bg-gray-200 h-32 rounded-md mb-2"></div>
-                  <h3 className="font-medium">Producto {product}</h3>
-                  <p className="text-gray-600">$99.99</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Posts Section */}
-          <div className="bg-white rounded-lg shadow p-4">
-            <h2 className="font-semibold text-lg mb-4">PUBLICACIONES</h2>
-            <div className="space-y-4">
-              {[1, 2, 3].map((post) => (
-                <div key={post} className="border-b pb-4 last:border-b-0">
-                  <h3 className="font-medium mb-2">Publicación {post}</h3>
-                  <p className="text-gray-600">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+          <Productos productos={productosMock} />
+          <Publicaciones publicaciones={publicacionesMock} />
         </div>
       </div>
     </div>
-  )
+  );
 }
-

@@ -1,13 +1,12 @@
-import Layout from "../../layouts/UserLayout";
 
-const Home = ()=> {
+import Comprador from '../perfil/Comprador';
+
+const Test = ()=> {
     return (
-        <>
-        <Layout>
-            
-        </Layout>
-        </>
+        <Comprador>
+
+        </Comprador>
     )
 }
 
-export default Home ;
+export default Test ;

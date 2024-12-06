@@ -6,7 +6,7 @@ import Sidebar from '../components/user/Sidebar';
 export default function Layout({ children }) {
   return (
     <UserProvider>
-      <div className="w-full h-full">
+      <div className="w-full h-full bg-white">
         {/* Navbar */}
         <Navbar />
         
