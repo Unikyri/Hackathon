@@ -1,17 +1,17 @@
-import React, { useState, useContext } from "react";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Link, useNavigate } from "react-router-dom";
-import { Spinner } from "@nextui-org/spinner";
-import { GetAccessToken } from "../../services/AuthServices"; // Asegúrate de que esta función maneje los roles.
-import { AuthContext } from "../../providers/AuthProvider";
+import React, { useState, useContext } from 'react';
+import { Button } from '@nextui-org/button';
+import { Input } from '@nextui-org/input';
+import { Link, useNavigate } from 'react-router-dom';
+import { Spinner } from '@nextui-org/spinner';
+import { GetAccessToken } from '../../services/AuthServices'; // Asegúrate de que esta función maneje los roles.
+import { AuthContext } from '../../providers/AuthProvider';
 
 export default function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const { token, setToken, setUserRole, setSession } = useContext(AuthContext);
-    const navigate = useNavigate();
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
+	const { token, setToken, setUserRole, setSession } = useContext(AuthContext);
+	const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
