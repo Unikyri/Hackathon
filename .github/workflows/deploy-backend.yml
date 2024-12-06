@@ -24,7 +24,7 @@ jobs:
             sudo pkill main || true
 
             # Navegar al directorio del proyecto
-            cd /home/github-actions/Hackathon/Hackathon/backend
+            cd /home/jeaqhbo/Hackathon/Hackathon
 
             # Resetear los cambios locales y hacer pull de la rama backend
             sudo git reset --hard
