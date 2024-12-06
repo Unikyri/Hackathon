@@ -2,7 +2,8 @@ package main
 
 import (
 	"Hackathon/db"
-	"github.com/gofiber/fiber/v2" // Asumiendo que estás usando Fiber v2
+	"Hackathon/internal/routes" // Importa el paquete donde tienes las rutas
+	"github.com/gofiber/fiber/v2"
 	_ "github.com/lib/pq"
 	"log"
 	"os"
@@ -25,9 +26,14 @@ func main() {
 	app := fiber.New()
 
 	// Configura las rutas
+<<<<<<< HEAD
 	app.Get("/", func(c *fiber.Ctx) error {
+
 		return c.SendString("¡Probando si funciona la automatización (3)")
-	})
+
+=======
+	routes.SetupRoutes(app) // Llama a la función que configura las rutas
+>>>>>>> backend
 
 	// Inicia el servidor en la IP externa (0.0.0.0) y puerto 10000
 	err := app.Listen(":10000") // Aquí puedes cambiar el puerto si es necesario

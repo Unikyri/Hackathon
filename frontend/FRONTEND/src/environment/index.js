@@ -1,5 +1,7 @@
 export const BASE_URL = 'http://localhost:8080';
+
 export const BASE_COLORS = 'black';
+
 export const ROLES = [
 	{ value: 'Administrador', label: 'Administrador' },
 	{ value: 'Profesor de Comite', label: 'Profesor de Comité' },
