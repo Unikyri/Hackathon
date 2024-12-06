@@ -60,15 +60,21 @@ export default function Sidebar() {
         {/* Opciones del menú */}
         <nav className="flex-grow">
           <ul className="p-4 space-y-4">
-            <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
-              Favoritos
-            </li>
-            <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
-              Publicaciones
-            </li>
-            <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
-              Productos
-            </li>
+            <a href="/favoritos">
+              <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
+                Favoritos
+              </li>
+            </a>
+            <a href="/">
+              <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
+                Publicaciones
+              </li>
+            </a>
+            <a href="/">
+              <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
+                Productos
+              </li>
+            </a>
           </ul>
         </nav>
 

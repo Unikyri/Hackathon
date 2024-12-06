@@ -4,7 +4,6 @@ import {
 	Input,
 	Select,
 	SelectItem,
-	Checkbox,
 	Card,
 	CardBody,
 	CardHeader,
@@ -12,15 +11,39 @@ import {
 
 export default function RegisterPage() {
 	const [userData, setUserData] = useState({
-		numeroCel: '',
-		tipoVehiculo: '',
-		placa: '',
-		categoria: '',
+			nombre: '', 
+			rol: '',
+			telefono: null,
+			correo: '',
+			contraseña: '',
+			coordenadas: '', 
+			imagen: null,
+			descripcion: ''
 	});
 
 	// Arreglos de valores para los Selects
-	const valoresSelecTipo = ['automovil', 'moto', 'taxi'];
-	const valoresSelecCategoria = ['Privado', 'Publico', 'Permiso Especial'];
+	const roles = ['Comprador', 'Vendedor'];
+
+	const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
+
+  const getCoordinates = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCoordinates({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.error("Error obteniendo las coordenadas: ", error);
+          alert("No se pudieron obtener las coordenadas.");
+        }
+      );
+    } else {
+      alert("La geolocalización no es soportada por este navegador.");
+    }
+  };
 
 	const handleInputChange = (e) => {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -33,13 +56,17 @@ export default function RegisterPage() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const { numeroCel, tipoVehiculo, placa, categoria } = userData;
+		const { nombre, rol, telefono, correo, contraseña, coordenadas, imagen, descripcion } = userData;
 
 		const requestBody = {
-			numero_celular: numeroCel,
-			tipo_vehiculo: valoresSelecTipo[tipoVehiculo],
-			placa: placa,
-			categoria: valoresSelecCategoria[categoria],
+			nombre: nombre, 
+			rol: roles[rol],
+			telefono: telefono,
+			correo: correo,
+			contraseña: contraseña,
+			coordenadas: coordenadas, 
+			imagen: imagen,
+			descripcion: descripcion
 		};
 
 		try {
@@ -53,6 +80,7 @@ export default function RegisterPage() {
 
 			if (response.ok) {
 				console.log('Solicitud exitosa', await response.json());
+				Alert.alert("Su registro fue exitoso.")
 			} else {
 				console.error('Error en la solicitud', response.statusText);
 			}
@@ -62,72 +90,91 @@ export default function RegisterPage() {
 	};
 
 	return (
-		<div className="container mx-auto p-4">
-			<Card className="max-w-2xl mx-auto bg-pink-50 shadow-lg"> {/* Fondo pastel rosa */}
-				<CardHeader className="flex flex-col items-start px-6 py-4">
-					<h1 className="text-2xl font-bold text-pink-600">Suscripción a servicio</h1> {/* Título en rosa más oscuro */}
-					<p className="text-pink-500"> {/* Texto en un tono pastel rosa */}
-						Regístrate para recibir alertas de movilidad en Villavicencio
+		<div className="container bg-gray mx-auto p-4">
+			<Card className="max-w-2xl mx-auto bg-white shadow-lg"> 
+				<CardHeader className="flex flex-col items-center px-6 py-4">
+					<h1 className="text-2xl font-bold text-blue-600">Registro</h1> {/* Título en rosa más oscuro */}
+					<p className="text-blue-500"> {/* Texto en un tono pastel rosa */}
+						Regístrate para conectarte con proveedores o compradores.
 					</p>
 				</CardHeader>
 				<CardBody>
 					<form onSubmit={handleSubmit} className="space-y-6">
 						<Input
-							label="Número de Celular"
-							name="numeroCel"
-							type="tel"
-							placeholder="Ej: 3001234567"
-							value={userData.numeroCel}
+							label="Nombre"
+							name="nombre"
+							type="text"
+							placeholder="Pepito Perez"
+							value={userData.nombre}
 							onChange={handleInputChange}
 							required
-							className="bg-pink-100" // Color pastel para el input
+							className="bg-white"
 						/>
 	
 						<Select
-							label="Tipo de Vehículo"
+							label="Rol"
 							placeholder="Selecciona un tipo"
-							value={userData.tipoVehiculo}
-							onChange={(e) => handleSelectChange('tipoVehiculo', e.target.value)}
+							value={userData.rol}
+							onChange={(e) => handleSelectChange('rol', e.target.value)}
 							required
-							className="bg-pink-100" // Color pastel para el select
+							className="bg-gray-100"
 						>
-							{valoresSelecTipo.map((tipo, index) => (
-								<SelectItem className=' bg-pink-500' key={index} value={tipo}>
+							{roles.map((tipo, index) => (
+								<SelectItem className=' bg-pink hover:bg-gray-700' key={index} value={tipo}>
 									{tipo.charAt(0).toUpperCase() + tipo.slice(1)}
 								</SelectItem>
 							))}
 						</Select>
 	
 						<Input
-							label="Placa del Vehículo"
-							name="placa"
-							placeholder="Ej: ABC123"
-							value={userData.placa}
+							label="Telefono"
+							name="telefono"
+							placeholder="Ej: 3333333333"
+							value={userData.telefono}
 							onChange={handleInputChange}
 							required
-							className="bg-pink-100" // Color pastel para el input
+							className="bg-white-100"
 						/>
 	
-						<Select
-							label="Categoría del Vehículo"
-							placeholder="Selecciona una categoría"
-							value={userData.categoria}
-							onChange={(e) => handleSelectChange('categoria', e.target.value)}
+						<Input
+							label="Correo"
+							name="correo"
+							placeholder="exmple@example.com"
+							value={userData.correo}
+							onChange={handleInputChange}
 							required
-							className="bg-pink-100" // Color pastel para el select
-						>
-							{valoresSelecCategoria.map((categoria, index) => (
-								<SelectItem className=' bg-pink-500' key={index} value={categoria}>
-									{categoria}
-								</SelectItem>
-							))}
-						</Select>
+							className="bg-white-100"
+						/>
+
+						<Input
+							label="Contraseña"
+							name="contraseña"
+							placeholder="*******"
+							value={userData.contraseña}
+							onChange={handleInputChange}
+							required
+							className="bg-white-100"
+						/>
+
+						<Input
+							label="Descripción"
+							name="descripcion"
+							placeholder="Agregue una descripción de su perfil y sus productos o compras..."
+							value={userData.descripcion}
+							onChange={handleInputChange}
+							className="bg-white-100"
+						/>
+
+						<div className="flex flex-row items-center justify-center bg-gray-100">
+							<button
+								onClick={getCoordinates}
+								className="px-2 py-2 mg-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+							>
+								Obtener dirección
+							</button>
+						</div>	
 	
-						<Checkbox className="text-pink-600"> {/* Color pastel para el checkbox */}
-							Acepto recibir alertas y notificaciones
-						</Checkbox>
-	
-						<Button type="submit" className="w-full bg-pink-500 hover:bg-pink-700 text-white"> {/* Botón pastel rosa */}
+						<Button type="submit" className="w-full bg-gray-500 hover:bg-green-700 text-white"> 
 							Registrarse
 						</Button>
 					</form>
