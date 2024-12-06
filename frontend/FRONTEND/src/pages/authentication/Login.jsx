@@ -104,6 +104,8 @@ export default function Login() {
                     >
                         {isLoading ? <Spinner color="white" /> : "Ingresar"}
                     </Button>
+                    <h2 className="text-2xl font-semibold text-center text-black mb-3">¿No tiene cuenta?</h2>
+                    <a href="/Register" className="text-center mb-3">Registrarse</a>
                 </form>
             </div>
         </div>
