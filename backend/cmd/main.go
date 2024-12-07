@@ -4,6 +4,7 @@ import (
 	"Hackathon/db"
 	"Hackathon/internal/routes" // Importa el paquete donde tienes las rutas
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	_ "github.com/lib/pq"
 	"log"
 	"os"
@@ -15,6 +16,7 @@ func main() {
 	db.InitDB()
 	defer db.CerrarDB()
 
+	// Habilita CORS
 	// Ejecuta las migraciones
 	if err := runMigrations(); err != nil {
 		log.Fatalf("Error al ejecutar migraciones: %v\n", err)
@@ -24,7 +26,7 @@ func main() {
 
 	// Inicializa el servidor Fiber
 	app := fiber.New()
-
+	app.Use(cors.New())
 	// Configura las rutas
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
