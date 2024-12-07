@@ -36,4 +36,5 @@ func SetupRoutes(app *fiber.App) {
 	app.Delete("/user/favorites/remove", handlers.RemoverFavorito)
 
 	//Hacer una reseña
+	app.Post("/review", handlers.CrearCalificacion)
 }
