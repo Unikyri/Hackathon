@@ -2,23 +2,18 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 export const UserProfile = () => {
-  const { name } = useParams();
+  const { id } = useParams();
+
+  // Asegúrate de manejar el caso donde no exista un id
+  if (!id) {
+    return <p>No se ha proporcionado un ID de usuario.</p>;
+  }
 
   return (
-    <div className='pd-16 bg-gray-50 border-r-8'>
-      <h1 className='bg-blue'>Perfil de {name}</h1>
-      <p className='color-black'>Información detallada del usuario aparecerá aquí.</p>
+    <div style={styles.container}>
+      <h1>Perfil de {id}</h1>
+      <p>Información detallada del usuario aparecerá aquí.</p>
     </div>
   );
 };
-
-const styles = {
-  container: {
-    padding: '16px',
-    backgroundColor: '#fff',
-    borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-  },
-};
-
 export default UserProfile;

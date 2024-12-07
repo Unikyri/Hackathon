@@ -37,9 +37,6 @@ export default function Sidebar() {
       // Actualizar el localStorage
       localStorage.setItem("session", "false");
       localStorage.setItem("role", "null");
-
-      // Opcional: Redirigir a la página de inicio o login
-      navigate('/login');
     }
   };
 

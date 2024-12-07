@@ -1,5 +1,5 @@
 export * from './authentication/Login';
-export * from './authentication/RegisterPage';
+export * from './authentication/Register';
 export * from './externo/Externo';
 export * from './favourites/FavouritesSeller';
 export * from './home/Home';

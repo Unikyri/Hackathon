@@ -12,7 +12,7 @@ import { RegisterUser } from '../../services/AuthServices';
 
 import { BASE_URL, ROLES } from '../../environment/index';
 
-export default function RegisterPage() {
+export default function Register() {
 	const [userData, setUserData] = useState({
 		nombre: '',
 		rol: '',

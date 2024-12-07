@@ -5,20 +5,21 @@ import CompradorPerfil from '../../components/comprador/CompradorPerfil'; // Com
 import Layout from '../../layouts/UserLayout';
 
 export const Comprador = () => {
-  const { userRole } = useContext(AuthContext); // Accede al contexto de autenticación (o estado global)
+	const { userRole } = useContext(AuthContext); // Accede al contexto de autenticación (o estado global)
 
-  return (
-    <Layout>
-      <div className="h-full">
-          {/* <CompradorHome />  */}
-          <CompradorPerfil /> 
-          {/* // Si no es 'comprador', renderiza el componente principal */}
-        {/* {userRole === 'comprador' ? (
-        ) : (
-        )} */}
-      </div>
-    </Layout>
-  );
+	return (
+		<Layout>
+			<div className="h-full">
+				<div className="h-full">
+					{userRole === 'vendedor' ? (
+						<CompradorPerfil/>
+					) : (
+						<CompradorHome/> //Mostrar VendedorPerfil solo si el rol es 'Vendedor'
+					)}
+				</div>
+			</div>
+		</Layout>
+	);
 };
 
 export default Comprador;
