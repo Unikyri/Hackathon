@@ -10,7 +10,7 @@ func SetupRoutes(app *fiber.App) {
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
-			"message": "Esto es para probar que el servidor está funcionando",
+			"message": "Otro mensaje para verificar que sí se cambió",
 		})
 	})
 
