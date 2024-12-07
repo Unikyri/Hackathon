@@ -36,6 +36,7 @@ const InteractiveMap = () => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const [userCoordinates, setUserCoordinates] = useState(null);
+  const [hasAnimated, setHasAnimated] = useState(false); // Control para animación inicial
 
   // Obtener coordenadas del equipo
   useEffect(() => {
@@ -50,6 +51,40 @@ const InteractiveMap = () => {
       }
     );
   }, []);
+
+  useEffect(() => {
+    if (!mapRef.current) {
+      // Inicializar el mapa
+      mapRef.current = new mapboxgl.Map({
+        container: mapContainerRef.current,
+        style: 'mapbox://styles/mapbox/outdoors-v12',
+        center: [0, 0], // Punto inicial (centro del mundo)
+        zoom: 1,
+      });
+
+      // Agregar controles de navegación
+      mapRef.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+    }
+
+    if (userCoordinates && !hasAnimated) {
+      // Realizar animación inicial
+      mapRef.current.flyTo({
+        center: [0, 0],
+        zoom: 1,
+        speed: 0.5, // Velocidad de la animación inicial (más lenta)
+      });
+
+      setTimeout(() => {
+        mapRef.current.flyTo({
+          center: [userCoordinates.longitude, userCoordinates.latitude],
+          zoom: 13,
+          speed: 1.5, // Velocidad del zoom hacia la ubicación del equipo
+          essential: true,
+        });
+        setHasAnimated(true); // Marcar animación como realizada
+      }, 3000); // Tiempo de espera antes de hacer zoom
+    }
+  }, [userCoordinates, hasAnimated]);
 
   // Inicializar el mapa y agregar marcadores
   useEffect(() => {

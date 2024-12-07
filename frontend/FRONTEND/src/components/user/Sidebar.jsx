@@ -49,6 +49,7 @@ export default function Sidebar() {
     >
       <div className="flex flex-col h-full">
         {/* Sección del perfil */}
+      <a href='/perfil'>
         <div className="p-4 border-b border-gray-600 flex items-center">
           <div className="w-12 h-12 bg-gray-500 rounded-full mr-3"></div>
           <div>
@@ -56,21 +57,21 @@ export default function Sidebar() {
             <p className="text-sm text-gray-400">Detalles...</p>
           </div>
         </div>
-
+      </a>
         {/* Opciones del menú */}
         <nav className="flex-grow">
           <ul className="p-4 space-y-4">
-            <a href="/favoritos">
+            <a className='p-2' href="/favoritos">
               <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
                 Favoritos
               </li>
             </a>
-            <a href="/">
+            <a className='p-2' href="/">
               <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
                 Publicaciones
               </li>
             </a>
-            <a href="/">
+            <a className='p-2' href="/">
               <li className="bg-gray-700 rounded-md p-3 text-center hover:bg-gray-600 cursor-pointer">
                 Productos
               </li>
