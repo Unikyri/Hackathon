@@ -13,17 +13,19 @@ const LoadingScreen = () => {
 
 const ContainerNavigation = () => {
 
-    const { token, isLoading , session } = useContext(AuthContext);
-
+    const { token, isLoading , session ,setSession } = useContext(AuthContext);
+    setSession(localStorage.getItem('session'))
+    
     useEffect(() => {
         console.log(`session a cambiado y tendra que reiniciar el componente : session=${session}, userRole=${token}`);
       }, [session])
+
 
     if (isLoading) {
         return <LoadingScreen />;
     }
 
-    return token && session ? <MainNavigation /> : <AuthNavigation />;
+    return session ? <MainNavigation/> : <AuthNavigation />;
 
 };
 

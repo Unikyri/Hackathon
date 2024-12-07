@@ -1,42 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+import React, { useEffect, useRef, useState , useContext } from "react";
+import mapboxgl from "mapbox-gl";
+import { getUsersData } from "../services/UserServices"; // Ajusta la ruta de importación
+import { AuthContext } from '../providers/AuthProvider';
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiaGVybmFuZHFnIiwiYSI6ImNtNGJyZXY1OTAwZ3YyanB5bTdkdnE2aWoifQ.J1rmncwLx3ryA3l_XwAL0A';
-
-// useEffect(() => {
-//   // Consumir el servicio del backend
-//   fetch('https://tu-backend/api/locations') // Reemplaza con la URL real de tu servicio
-//     .then((response) => response.json())
-//     .then((data) => setLocations(data))
-//     .catch((error) => console.error('Error al obtener las ubicaciones:', error));
-// }, []);
-
-const places = [
-  {
-    latitude: 4.1252,
-    longitude: -73.6369,
-    name: "Vendedor1",
-    imageUrl: "https://cdn-icons-png.flaticon.com/512/219/219983.png",
-  },
-  {
-    latitude: 4.1403,
-    longitude: -73.6521,
-    name: "Vendedor2",
-    imageUrl: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_640.png",
-  },
-  {
-    latitude: 4,
-    longitude: -73.6196,
-    name: "Vendedor3",
-    imageUrl: "https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg",
-  },
-];
+mapboxgl.accessToken = "pk.eyJ1IjoiaGVybmFuZHFnIiwiYSI6ImNtNGJyZXY1OTAwZ3YyanB5bTdkdnE2aWoifQ.J1rmncwLx3ryA3l_XwAL0A";
 
 const InteractiveMap = () => {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+  const {id , session} = useContext(AuthContext);
   const [userCoordinates, setUserCoordinates] = useState(null);
-  const [hasAnimated, setHasAnimated] = useState(false); // Control para animación inicial
+  const [places, setPlaces] = useState([]);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  
 
   // Obtener coordenadas del equipo
   useEffect(() => {
@@ -52,86 +28,76 @@ const InteractiveMap = () => {
     );
   }, []);
 
+  // Llamar al servicio para obtener datos
   useEffect(() => {
-    if (!mapRef.current) {
-      // Inicializar el mapa
-      mapRef.current = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: 'mapbox://styles/mapbox/outdoors-v12',
-        center: [0, 0], // Punto inicial (centro del mundo)
-        zoom: 1,
-      });
+    console.log(id, session)
+    const fetchUserData = async () => {
+      try {
+        const data = await getUsersData(id);
+        const { ubicacion_usuario, usuarios } = data;
 
-      // Agregar controles de navegación
-      mapRef.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
-    }
+        // Actualizar coordenadas del usuario principal
+        if (ubicacion_usuario) {
+          setUserCoordinates({
+            latitude: ubicacion_usuario.latitud,
+            longitude: ubicacion_usuario.longitud,
+          });
+        }
 
-    if (userCoordinates && !hasAnimated) {
-      // Realizar animación inicial
-      mapRef.current.flyTo({
-        center: [0, 0],
-        zoom: 1,
-        speed: 0.5, // Velocidad de la animación inicial (más lenta)
-      });
+        // Transformar usuarios en el formato necesario para 'places'
+        const transformedPlaces = usuarios.map((usuario) => ({
+          latitude: usuario.Latitud,
+          longitude: usuario.Longitud,
+          name: usuario.Nombre,
+          imageUrl: usuario.Foto || "https://cdn-icons-png.flaticon.com/512/219/219983.png", // Imagen por defecto
+        }));
 
-      setTimeout(() => {
-        mapRef.current.flyTo({
-          center: [userCoordinates.longitude, userCoordinates.latitude],
-          zoom: 13,
-          speed: 1.5, // Velocidad del zoom hacia la ubicación del equipo
-          essential: true,
-        });
-        setHasAnimated(true); // Marcar animación como realizada
-      }, 3000); // Tiempo de espera antes de hacer zoom
-    }
-  }, [userCoordinates, hasAnimated]);
+        setPlaces(transformedPlaces);
+      } catch (error) {
+        console.error("Error al obtener los datos del usuario:", error);
+      }
+    };
+
+    if (id) fetchUserData();
+  }, [id]);
 
   // Inicializar el mapa y agregar marcadores
   useEffect(() => {
     if (!mapRef.current) {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
-        style: 'mapbox://styles/mapbox/outdoors-v12', // Estilo sin etiquetas
+        style: "mapbox://styles/mapbox/outdoors-v12",
         center: userCoordinates
           ? [userCoordinates.longitude, userCoordinates.latitude]
-          : [-73.6369, 4.1252], // Centro inicial (Villavicencio)
+          : [-73.6369, 4.1252],
         zoom: 11,
       });
 
-      // Agregar controles de zoom
-      mapRef.current.addControl(new mapboxgl.NavigationControl(), 'top-right');
+      mapRef.current.addControl(new mapboxgl.NavigationControl(), "top-right");
     }
 
-    // Agregar marcador para la ubicación del equipo
-    if (userCoordinates) {
-      const userMarkerEl = document.createElement('div');
-      userMarkerEl.className = 'user-marker';
-      userMarkerEl.style.backgroundColor = 'blue';
-      userMarkerEl.style.width = '50px';
-      userMarkerEl.style.height = '50px';
-      userMarkerEl.style.borderRadius = '50%';
-      userMarkerEl.style.border = '3px solid white';
-
-      new mapboxgl.Marker(userMarkerEl)
-        .setLngLat([userCoordinates.longitude, userCoordinates.latitude])
-        .setPopup(
-          new mapboxgl.Popup({ offset: 25 }).setHTML('<p>¡Aquí estás tú!</p>')
-        )
-        .addTo(mapRef.current);
+    if (userCoordinates && !hasAnimated) {
+      mapRef.current.flyTo({
+        center: [userCoordinates.longitude, userCoordinates.latitude],
+        zoom: 13,
+        speed: 1.5,
+        essential: true,
+      });
+      setHasAnimated(true);
     }
-
-    // Agregar marcadores para otras ubicaciones
+    console.log(places)
+    // Agregar marcadores dinámicamente
     places.forEach((location) => {
-      const { latitude, longitude, name, imageUrl} = location;
+      const { latitude, longitude, name, imageUrl } = location;
 
-      const el = document.createElement('div');
-      el.className = 'custom-marker';
+      const el = document.createElement("div");
+      el.className = "custom-marker";
       el.style.backgroundImage = `url(${imageUrl})`;
-      el.style.width = '40px';
-      el.style.height = '40px';
-      el.style.backgroundSize = 'cover';
-      el.style.borderRadius = '50%';
-      el.style.cursor = 'pointer';
+      el.style.width = "40px";
+      el.style.height = "40px";
+      el.style.backgroundSize = "cover";
+      el.style.borderRadius = "50%";
+      el.style.cursor = "pointer";
 
       const marker = new mapboxgl.Marker(el)
         .setLngLat([longitude, latitude])
@@ -144,12 +110,12 @@ const InteractiveMap = () => {
         </div>
       `);
 
-      marker.getElement().addEventListener('mouseenter', () => popup.addTo(mapRef.current));
-      marker.getElement().addEventListener('mouseleave', () => popup.remove());
+      marker.getElement().addEventListener("mouseenter", () => popup.addTo(mapRef.current));
+      marker.getElement().addEventListener("mouseleave", () => popup.remove());
 
-      marker.getElement().addEventListener('click', () => {
+      marker.getElement().addEventListener("click", () => {
         window.location.href = `http://localhost:5173/profile/${name}`;
-        console.log('Redirigiendo a:', `http://localhost:5173/profile/${name}`);
+        console.log("Redirigiendo a:", `http://localhost:5173/profile/${name}`);
       });
     });
 
@@ -159,7 +125,7 @@ const InteractiveMap = () => {
         mapRef.current = null;
       }
     };
-  }, [userCoordinates]);
+  }, [userCoordinates, places]);
 
   // Función para centrar en la ubicación del equipo
   const goToUserLocation = () => {
@@ -175,8 +141,8 @@ const InteractiveMap = () => {
   };
 
   return (
-    <div className="relative h-96 w-full ">
-      <div ref={mapContainerRef} className=" h-full w-full place-content-center" />
+    <div className="relative h-96 w-full">
+      <div ref={mapContainerRef} className="h-full w-full" />
       <button
         onClick={goToUserLocation}
         className="absolute top-4 left-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-600"

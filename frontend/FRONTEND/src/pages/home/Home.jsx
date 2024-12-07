@@ -1,52 +1,64 @@
-import React from 'react';
-import {
-	Button,
-	Select,
-	SelectItem,
-} from '@nextui-org/react';
+import React, { useEffect, useState } from 'react';
+import { Button, Select, SelectItem } from '@nextui-org/react';
 import UserLayout from '../../layouts/UserLayout';
 import InteractiveMap from '../../components/InteractiveMap';
 import { Publicaciones } from '../../components/vendedor/Publicaciones';
+import { getUserPerfil } from '../../services/UserServices';
 
-const publicacionesMock = [
-	{ id: 1, titulo: "Publicación 1", contenido: "Contenido de la publicación 1." },
-	{ id: 2, titulo: "Publicación 2", contenido: "Contenido de la publicación 2." },
-	{ id: 3, titulo: "Publicación 3", contenido: "Contenido de la publicación 3." },
-  ];
+const Home = () => {
+  const [filtro, setFiltro] = useState('');
+  const [publicaciones, setPublicaciones] = useState([]);
+  const filtros = ['Comprador', 'Vendedor', 'Res', 'Cerdo', 'Pollo', 'Pescado'];
 
-  
-  const Home = () => {
-	const [filtro, setFiltro] = React.useState('');
+  useEffect(() => {
+    // Obtener el ID del usuario del localStorage
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userId = user?.id;
 
-	const filtros = ['Comprador', 'Vendedor', 'Res', "Cerdo", "Pollo", "Pescado"];
+    if (userId) {
+      // Llamar al servicio para obtener el perfil del usuario
+      getUserPerfil(userId)
+        .then((data) => {
+          // Asegúrate de que las publicaciones estén en la estructura esperada
+          setPublicaciones(data.publicaciones || []);
+        })
+        .catch((error) => {
+          console.error('Error al obtener el perfil del usuario:', error);
+        });
+    }
+  }, []);
 
-	const handleSelectChange = (field, value) => {
-		setUserData({ ...userData, [field]: value });
-	};
+  const handleSelectChange = (field, value) => {
+    setFiltro(value);
+  };
 
-	return (
-		<UserLayout>
-		<div>
-		<Select
-			label="Filtro"
-			placeholder="Selecciona una opción para filtrar"
-			value={filtro}
-			onChange={(e) => handleSelectChange('filtro', e.target.value)}
-			required
-			className="bg-black-100 w-1/4"
-		>
-			{filtros.map((tipo, index) => (
-				<SelectItem className=' bg-red hover:bg-gray-700' key={index} value={tipo}>
-					{tipo.charAt(0).toUpperCase() + tipo.slice(1)}
-				</SelectItem>
-			))}
-		</Select>
-		<Button>Buscar</Button>
-		</div>
-			<InteractiveMap />
-			<Publicaciones publicaciones={publicacionesMock}/>
-		</UserLayout>
-	);
+  return (
+    <UserLayout>
+      <div>
+        <Select
+          label="Filtro"
+          placeholder="Selecciona una opción para filtrar"
+          value={filtro}
+          onChange={(e) => handleSelectChange('filtro', e.target.value)}
+          required
+          className="bg-black-100 w-1/4"
+        >
+          {filtros.map((tipo, index) => (
+            <SelectItem
+              className=" bg-red hover:bg-gray-700"
+              key={index}
+              value={tipo}
+            >
+              {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+            </SelectItem>
+          ))}
+        </Select>
+        <Button>Buscar</Button>
+      </div>
+      <InteractiveMap />
+      <Publicaciones publicaciones={publicaciones} />
+    </UserLayout>
+  );
 };
 
 export default Home;

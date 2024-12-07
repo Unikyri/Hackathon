@@ -10,8 +10,11 @@ export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
-	const { token, setToken, setUserRole, setSession } = useContext(AuthContext);
+	const {setUserRole, setSession , setId } = useContext(AuthContext);
 	const navigate = useNavigate();
+	
+	setSession(null)
+	setUserRole(null)
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -27,6 +30,7 @@ export default function Login() {
 			if (success) {
 				// Guardar los datos en el contexto y localStorage
 				setUserRole(role);
+				setId(user)
 				setSession(true);
 				localStorage.setItem('role', role);
 				localStorage.setItem('user', user);
@@ -38,10 +42,10 @@ export default function Login() {
 						navigate('/admin');
 						break;
 					case 'comprador':
-						navigate('/comprador');
+						navigate('/home');
 						break;
 					case 'vendedor':
-						navigate('/vendedor');
+						navigate('/home');
 						break;
 					default:
 						navigate('/home');

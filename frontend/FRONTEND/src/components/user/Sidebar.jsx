@@ -1,11 +1,12 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { UserContext } from '../../providers/UserProvider';
 import { AuthContext } from '../../providers/AuthProvider';
-
+import { useNavigate } from 'react-router-dom';
 export default function Sidebar() {
   const { sidebarState, setSidebarState } = useContext(UserContext);
   const {setSession } = useContext(AuthContext);
   const sidebarRef = useRef(null);
+  const navigate = useNavigate();
 
   // Cierra el sidebar si se hace clic fuera de él
   useEffect(() => {
@@ -28,15 +29,17 @@ export default function Sidebar() {
   const handleLogout = () => {
     const confirmLogout = window.confirm("¿Estás seguro de que deseas cerrar sesión?");
     if (confirmLogout) {
+      console.log("se cerro sesion")
       // Cambiar estados del contexto
       setSession(false);
       setSidebarState(false);
 
       // Actualizar el localStorage
       localStorage.setItem("session", "false");
+      localStorage.setItem("role", "null");
 
       // Opcional: Redirigir a la página de inicio o login
-      window.location.href = "/login";
+      navigate('/login');
     }
   };
 

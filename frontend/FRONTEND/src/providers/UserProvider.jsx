@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
     const [navbarState, setNavbarState] = useState(true);
     
     
+    
     return (
         <UserContext.Provider value={{ sidebarState , setSidebarState ,navbarState, setNavbarState}}>
             {children}

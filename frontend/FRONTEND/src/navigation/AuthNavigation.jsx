@@ -12,11 +12,9 @@ export default function AuthNavigation() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login/>} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />}/>
+                <Route path="/login" element={<Login/>} />
+                <Route path="/Register" element={<Register/>}/>
                 <Route path="*" element={<DeniedPage />} />
-
-
             </Routes>
         </BrowserRouter>
     );
