@@ -1,7 +1,7 @@
 import { BASE_URL } from "../environment";
 
 // Función para obtener el usuario con el id proporcionado
-export const getUsersDataMap = async (id) => {
+export const getUserData = async (id) => {
   const url = `${BASE_URL}/userMap?id=${id}`;
   
   try {
@@ -26,3 +26,4 @@ export const getUsersDataMap = async (id) => {
   }
 };
 
+    
