@@ -29,7 +29,7 @@ func main() {
 	app := fiber.New()
 	// Habilita CORS
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://192.168.56.1:5173", // Permite solo tu frontend local
+		AllowOrigins: "http://192.168.1.11:5173", // Permite solo tu frontend local
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS", // Métodos HTTP permitidos
 	}))
