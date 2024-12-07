@@ -5,21 +5,17 @@ import DeniedPage from "../pages/other/Denied";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import Externo from "../pages/externo/Externo"
 import Test from "../pages/test/Test";
-import FavouritesSeller from "../pages/favourites/FavouritesSeller";
-import {Comprador, UserProfile} from "../pages/index";
+
 
 export default function AuthNavigation() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Test/>} />
+                <Route path="/" element={<Login/>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />}/>
-                <Route path="/home" element={<Home />} />
                 <Route path="*" element={<DeniedPage />} />
-                <Route path="/favoritos" element={<FavouritesSeller />} />
-                <Route path="/perfil" element={<Comprador />} />
-                <Route path="/profile/:name" element={<UserProfile />} />
+
 
             </Routes>
         </BrowserRouter>
