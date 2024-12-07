@@ -26,7 +26,7 @@ func ObtenerInfoUsuario(c *fiber.Ctx) error {
 			"error": "ID de usuario inválido",
 		})
 	}
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
+>>>>>>> frontendV2
 
 	// Obtener el parámetro de categoría (opcional)
 	categoria := c.Query("categoria") // Leer el parámetro de categoría desde la query string

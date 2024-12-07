@@ -1,5 +1,8 @@
+
 export const BASE_URL = 'http://34.51.10.74:10000';
-export const BASE_URL_DEPLOY = 'http://34.51.10.74:10001';
+export const BASE_URL_DEPLOY ='34.51.10.74'
+
+export const BASE_URL_DEV ='localhost'
 
 export const BASE_COLORS = 'black';
 

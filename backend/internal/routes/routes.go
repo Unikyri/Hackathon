@@ -9,6 +9,8 @@ import (
 func SetupRoutes(app *fiber.App) {
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 	// Ruta principal
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, world!")
@@ -16,6 +18,7 @@ func SetupRoutes(app *fiber.App) {
 
 	// Registro y Login
 =======
+>>>>>>> frontendV2
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{
 			"message": "¡Bienvenido a la API de Hackathon!",
@@ -28,19 +31,6 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/login", handlers.Login)
 
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
-	// Visualización de interfaz
-	app.Get("/userVisualizer", handlers.VisualizarUsuarios)
-	app.Get("/profileVisualizer", handlers.ObtenerInfoUsuario)
-	app.Get("/favoriteVisualizer", handlers.ObtenerFavoritos)
-
-	// Editar información del perfil
-	app.Post("/profileEdition/changePicture", handlers.CambiarFotoUsuario)
-	app.Post("/profileEdition/changeDescription", handlers.ModificarDescripcion)
-<<<<<<< HEAD
-=======
 	//Visualizacion de interfaz
 	app.Get("/userMap/:id", handlers.VisualizarUsuarios)
 	app.Get("/profile/:id", handlers.ObtenerInfoUsuario)
@@ -49,9 +39,16 @@ func SetupRoutes(app *fiber.App) {
 	//Editar información del perfil
 	app.Post("/user/:id/changePicture", handlers.CambiarFotoUsuario)
 	app.Post("/user/:id/changeDescription", handlers.ModificarDescripcion)
->>>>>>> frontend
 =======
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
+	// Visualización de interfaz
+	app.Get("/userVisualizer", handlers.VisualizarUsuarios)
+	app.Get("/profileVisualizer", handlers.ObtenerInfoUsuario)
+	app.Get("/favoriteVisualizer", handlers.ObtenerFavoritos)
+
+	// Editar información del perfil
+	app.Post("/profileEdition/changePicture", handlers.CambiarFotoUsuario)
+	app.Post("/profileEdition/changeDescription", handlers.ModificarDescripcion)
+>>>>>>> frontendV2
 
 	//Gestionar publicaciones
 	app.Post("/postCreation", handlers.CrearPublicacion)
@@ -62,5 +59,5 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/favorites/:id/:favorito_id", handlers.AgregarFavorito)
 	app.Delete("/favorites/:id/:favorito_id", handlers.RemoverFavorito)
 =======
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
+>>>>>>> frontendV2
 }

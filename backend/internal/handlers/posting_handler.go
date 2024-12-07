@@ -30,7 +30,7 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		Categoria   string `json:"categoria"`
 		Foto        []byte `json:"foto"`
 =======
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
+>>>>>>> frontendV2
 	}
 
 	// Parsear el cuerpo de la solicitud para obtener el texto de la publicación
@@ -50,7 +50,7 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		Categoria:   req.Categoria,
 		Foto:        req.Foto,
 =======
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
+>>>>>>> frontendV2
 	}
 
 	// Guardar la nueva publicación en la base de datos

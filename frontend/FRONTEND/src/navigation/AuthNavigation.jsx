@@ -6,11 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import Externo from "../pages/externo/Externo"
 import Test from "../pages/test/Test";
 import FavouritesSeller from "../pages/favourites/FavouritesSeller";
-<<<<<<< HEAD
-import UserProfile from "../pages/perfil/userProfile" ;
-=======
 import {Comprador, UserProfile} from "../pages/index";
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
 
 export default function AuthNavigation() {
     return (
