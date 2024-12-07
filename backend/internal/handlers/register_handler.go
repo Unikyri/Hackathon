@@ -16,7 +16,7 @@ func Register(c *fiber.Ctx) error {
 		Correo      string  `json:"correo"`
 		Telefono    string  `json:"telefono"`
 		Rol         string  `json:"rol"`
-		Foto        []byte  `json:"foto"`
+		Foto        *[]byte `json:"foto"`
 		Descripcion string  `json:"descripcion"`
 	}
 
@@ -35,6 +35,11 @@ func Register(c *fiber.Ctx) error {
 		})
 	}
 
+	var foto []byte
+	if req.Foto != nil {
+		foto = *req.Foto // Si se proporciona foto, la asignamos
+	}
+
 	// Crea y guarda el nuevo usuario
 	user := models.Usuario{
 		Correo:      req.Correo,
@@ -44,7 +49,7 @@ func Register(c *fiber.Ctx) error {
 		Nombre:      req.Nombre,
 		Telefono:    req.Telefono,
 		Rol:         req.Rol,
-		Foto:        req.Foto,
+		Foto:        foto,
 		Descripcion: req.Descripcion,
 	}
 	if err := db.DB.Create(&user).Error; err != nil {

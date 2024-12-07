@@ -16,8 +16,14 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 	// Buscar al usuario por ID
 	var usuario models.Usuario
 	if err := db.DB.Where("id = ?", id).First(&usuario).Error; err != nil {
-		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
-			"error": "Usuario no encontrado",
+		// Si no se encuentra el usuario, devolver un mensaje adecuado
+		if err.Error() == "record not found" {
+			return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+				"error": "Usuario no encontrado",
+			})
+		}
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "Error al buscar el usuario",
 		})
 	}
 
@@ -35,6 +41,14 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 	if err := query.Find(&usuariosConRol).Error; err != nil {
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Error al obtener los usuarios",
+		})
+	}
+
+	// Si no se encontraron usuarios, devolver una respuesta vacía o un mensaje
+	if len(usuariosConRol) == 0 {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"mensaje":  "No se encontraron usuarios con los criterios especificados",
+			"usuarios": []models.Usuario{},
 		})
 	}
 
