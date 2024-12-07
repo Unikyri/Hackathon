@@ -6,8 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// ObtenerInfoUsuario recibe el ID del usuario como parámetro y retorna toda su información,
-// incluyendo las calificaciones y las publicaciones (filtradas por categoría si se pasa como parámetro).
 func ObtenerInfoUsuario(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
 	usuarioID := c.Query("id") // Obtener el ID del usuario desde la URL
@@ -26,9 +24,8 @@ func ObtenerInfoUsuario(c *fiber.Ctx) error {
 	// Buscar las calificaciones que ha recibido
 	var calificaciones []models.Calificacion
 	if err := db.DB.Where("reseniado_id = ?", usuario.ID).Find(&calificaciones).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Error al obtener las calificaciones",
-		})
+		// No devolvemos error si no se encuentran calificaciones, solo respondemos con un array vacío
+		calificaciones = []models.Calificacion{}
 	}
 
 	// Filtrar las publicaciones por categoría si se ha proporcionado
@@ -42,9 +39,8 @@ func ObtenerInfoUsuario(c *fiber.Ctx) error {
 
 	// Ejecutar la consulta para obtener las publicaciones (con o sin filtro)
 	if err := query.Find(&publicaciones).Error; err != nil {
-		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"error": "Error al obtener las publicaciones",
-		})
+		// No devolvemos error si no se encuentran publicaciones, solo respondemos con un array vacío
+		publicaciones = []models.Publicacion{}
 	}
 
 	// Responder con toda la información del usuario
