@@ -56,6 +56,7 @@ export default function Login() {
 		}
 	};
 
+<<<<<<< HEAD
 	return (
 		<div className="flex items-center justify-center bg-white w-full h-full">
 			<div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-md w-full">
@@ -106,4 +107,51 @@ export default function Login() {
 			</div>
 		</div>
 	);
+=======
+            <div className="bg-gray-100 p-8 rounded-lg shadow-lg max-w-md w-full">
+                <div className="flex justify-center mb-6">
+                    <img src="./logo-web.png" className="w-40 h-40" />
+                </div>
+                <h2 className="text-2xl font-semibold text-center text-blue-700 mb-6">Iniciar Sesión</h2>
+                <form className="space-y-4" onSubmit={handleSubmit}>
+                    <Input
+                        color="secondary"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="Correo"
+                        required
+                        fullWidth
+                        size="lg"
+
+                        className="bg-gray-100 text-gray-200"
+
+                    />
+                    <Input
+                        color="secondary"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Contraseña"
+                        required
+                        fullWidth
+                        size="lg"
+                        className="bg-red-50 text-red-200"
+                    />
+                    <Button
+                        type="submit"
+                        color="secondary"
+                        size="lg"
+                        className="w-full bg-red-400 hover:bg-red-600 text-white"
+                    >
+                        {isLoading ? <Spinner color="white" /> : "Ingresar"}
+                    </Button>
+                    <h2 className="text-2xl font-semibold text-center text-black mb-3">¿No tiene cuenta?</h2>
+                    <a href="/Register" className="text-center mb-3">Registrarse</a>
+                </form>
+            </div>
+        </div>
+    );
+        
+>>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
 }

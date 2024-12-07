@@ -35,6 +35,7 @@ func main() {
 	}))
 	// Configura las rutas
 <<<<<<< HEAD
+<<<<<<< HEAD
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 =======
 	app.Get("/", func(c *fiber.Ctx) error {
@@ -45,6 +46,12 @@ func main() {
 
 	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
 	err := app.Listen("0.0.0.0:10000")
+=======
+	routes.SetupRoutes(app) // Llama a la función que configura las rutas
+
+	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
+	err := app.Listen("192.168.1.107:8080") // Cambié el puerto a 8080
+>>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}

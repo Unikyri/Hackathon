@@ -6,7 +6,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import Externo from "../pages/externo/Externo"
 import Test from "../pages/test/Test";
 import FavouritesSeller from "../pages/favourites/FavouritesSeller";
+<<<<<<< HEAD
 import UserProfile from "../pages/perfil/userProfile" ;
+=======
+import {Comprador, UserProfile} from "../pages/index";
+>>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
 
 export default function AuthNavigation() {
     return (
@@ -18,7 +22,9 @@ export default function AuthNavigation() {
                 <Route path="/home" element={<Home />} />
                 <Route path="*" element={<DeniedPage />} />
                 <Route path="/favoritos" element={<FavouritesSeller />} />
+                <Route path="/perfil" element={<Comprador />} />
                 <Route path="/profile/:name" element={<UserProfile />} />
+
             </Routes>
         </BrowserRouter>
     );
