@@ -80,7 +80,7 @@ export default function Login() {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        placeholder="Nombre de usuario"
+                        placeholder="Correo"
                         required
                         fullWidth
                         size="lg"

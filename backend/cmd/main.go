@@ -20,23 +20,16 @@ func main() {
 		log.Fatalf("Error al ejecutar migraciones: %v\n", err)
 	}
 
-	log.Println("Servidor listo para iniciar...")
+	log.Println("Servidor listo para iniciar y desplegado...")
 
 	// Inicializa el servidor Fiber
 	app := fiber.New()
 
 	// Configura las rutas
-<<<<<<< HEAD
-	app.Get("/", func(c *fiber.Ctx) error {
-
-		return c.SendString("¡Probando si funciona la automatización (3)")
-
-=======
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
->>>>>>> backend
 
-	// Inicia el servidor en la IP externa (0.0.0.0) y puerto 10000
-	err := app.Listen(":10000") // Aquí puedes cambiar el puerto si es necesario
+	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
+	err := app.Listen("192.168.1.107:8080") // Cambié el puerto a 8080
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}

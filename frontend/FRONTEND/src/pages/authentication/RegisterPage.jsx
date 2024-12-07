@@ -9,6 +9,8 @@ import {
 	CardHeader,
 } from '@nextui-org/react';
 
+import {BASE_URL, ROLES} from '../../environment/index';
+
 export default function RegisterPage() {
 	const [userData, setUserData] = useState({
 			nombre: '', 
@@ -16,13 +18,14 @@ export default function RegisterPage() {
 			telefono: null,
 			correo: '',
 			contraseña: '',
-			coordenadas: '', 
+			latitude: '',
+			longitud: '',
 			imagen: null,
 			descripcion: ''
 	});
 
 	// Arreglos de valores para los Selects
-	const roles = ['Comprador', 'Vendedor'];
+	// const roles = ['Comprador', 'Vendedor'];
 
 	const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
 
@@ -56,7 +59,7 @@ export default function RegisterPage() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const { nombre, rol, telefono, correo, contraseña, coordenadas, imagen, descripcion } = userData;
+		const { nombre, rol, telefono, correo, contraseña, latitude, longitude, imagen, descripcion } = userData;
 
 		const requestBody = {
 			nombre: nombre, 
@@ -64,13 +67,16 @@ export default function RegisterPage() {
 			telefono: telefono,
 			correo: correo,
 			contraseña: contraseña,
-			coordenadas: coordenadas, 
+			latitude: coordinates.latitude,
+			longitude: coordinates.longitude, 
 			imagen: imagen,
 			descripcion: descripcion
 		};
 
+		{console.log(requestBody)};
+		
 		try {
-			const response = await fetch('http://localhost:3001/api/subscribe', {
+			const response = await fetch(`${BASE_URL}/register`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -93,8 +99,8 @@ export default function RegisterPage() {
 		<div className="container bg-gray mx-auto p-4">
 			<Card className="max-w-2xl mx-auto bg-white shadow-lg"> 
 				<CardHeader className="flex flex-col items-center px-6 py-4">
-					<h1 className="text-2xl font-bold text-blue-600">Registro</h1> {/* Título en rosa más oscuro */}
-					<p className="text-blue-500"> {/* Texto en un tono pastel rosa */}
+					<h1 className="text-2xl font-bold text-blue-600">Registro</h1>
+					<p className="text-blue-500">
 						Regístrate para conectarte con proveedores o compradores.
 					</p>
 				</CardHeader>
@@ -119,7 +125,7 @@ export default function RegisterPage() {
 							required
 							className="bg-gray-100"
 						>
-							{roles.map((tipo, index) => (
+							{ROLES.map((tipo, index) => (
 								<SelectItem className=' bg-pink hover:bg-gray-700' key={index} value={tipo}>
 									{tipo.charAt(0).toUpperCase() + tipo.slice(1)}
 								</SelectItem>
@@ -167,7 +173,7 @@ export default function RegisterPage() {
 
 						<div className="flex flex-row items-center justify-center bg-gray-100">
 							<button
-								onClick={getCoordinates}
+								onClick={handleInputChange(getCoordinates)}
 								className="px-2 py-2 mg-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
 							>
 								Obtener dirección

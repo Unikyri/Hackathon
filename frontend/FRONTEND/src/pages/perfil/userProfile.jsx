@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const UserProfile = () => {
+export const UserProfile = () => {
   const { name } = useParams();
 
   return (

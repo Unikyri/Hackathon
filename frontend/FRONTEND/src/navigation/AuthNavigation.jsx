@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import Externo from "../pages/externo/Externo"
 import Test from "../pages/test/Test";
 import FavouritesSeller from "../pages/favourites/FavouritesSeller";
-import UserProfile from "../pages/perfil/UserProfile";
+import {Comprador, UserProfile} from "../pages/index";
 
 export default function AuthNavigation() {
     return (
@@ -18,7 +18,9 @@ export default function AuthNavigation() {
                 <Route path="/home" element={<Home />} />
                 <Route path="*" element={<DeniedPage />} />
                 <Route path="/favoritos" element={<FavouritesSeller />} />
+                <Route path="/perfil" element={<Comprador />} />
                 <Route path="/profile/:name" element={<UserProfile />} />
+
             </Routes>
         </BrowserRouter>
     );
