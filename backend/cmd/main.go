@@ -17,7 +17,6 @@ func main() {
 	db.InitDB()
 	defer db.CerrarDB()
 
-	// Habilita CORS
 	// Ejecuta las migraciones
 	if err := runMigrations(); err != nil {
 		log.Fatalf("Error al ejecutar migraciones: %v\n", err)
@@ -27,31 +26,24 @@ func main() {
 
 	// Inicializa el servidor Fiber
 	app := fiber.New()
+
 	// Habilita CORS
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://192.168.1.11:5173", // Permite solo tu frontend local
+		AllowOrigins: "http://192.168.1.11:5173, http://192.168.56.1:5173", // Agrega ambas IPs
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS", // Métodos HTTP permitidos
 	}))
+
 	// Configura las rutas
-<<<<<<< HEAD
-<<<<<<< HEAD
-	routes.SetupRoutes(app) // Llama a la función que configura las rutas
-=======
+	routes.SetupRoutes(app)
+
+	// Ruta de prueba en la raíz
 	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("¡Probando si funciona la automatización (3)!")
+	})
 
-		return c.SendString("¡Probando si funciona la automatización (3)")
-
->>>>>>> frontend
-
-	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
-	err := app.Listen("0.0.0.0:10000")
-=======
-	routes.SetupRoutes(app) // Llama a la función que configura las rutas
-
-	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
-	err := app.Listen("192.168.1.107:8080") // Cambié el puerto a 8080
->>>>>>> d481c28a991d206e966435a4a9be2d999384d7f1
+	// Inicia el servidor en la IP externa y puerto 8080
+	err := app.Listen("0.0.0.0:8080")
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}
