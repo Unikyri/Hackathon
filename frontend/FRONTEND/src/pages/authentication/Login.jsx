@@ -9,12 +9,17 @@ import { AuthContext } from '../../providers/AuthProvider';
 export default function Login() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [showPassword, setShowPassword] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const {setUserRole, setSession , setId } = useContext(AuthContext);
 	const navigate = useNavigate();
 	
 	setSession(null)
 	setUserRole(null)
+
+	const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -82,9 +87,10 @@ export default function Login() {
 					size="lg"
 					className="bg-gray-100 text-gray-200"
 				/>
+				<div className="flex flex-col items-center">
 				<Input
 					color="secondary"
-					type="password"
+					type={showPassword ? "text" : "password"}
 					value={password}
 					onChange={(e) => setPassword(e.target.value)}
 					placeholder="Contraseña"
@@ -93,6 +99,10 @@ export default function Login() {
 					size="lg"
 					className="bg-red-50 text-red-200"
 				/>
+				<Button type="button" onClick={togglePasswordVisibility} className='content-center'>
+					{showPassword ? "Ocultar" : "Mostrar"}
+				</Button>
+				</div>
 				<Button
 					type="submit"
 					color="secondary"
@@ -101,12 +111,14 @@ export default function Login() {
 				>
 					{isLoading ? <Spinner color="white" /> : 'Ingresar'}
 				</Button>
+				<div className="flex flex-col items-center">
 				<h2 className="text-2xl font-semibold text-center text-black mb-3">
 					¿No tiene cuenta?
 				</h2>
 				<a href="/Register" className="text-center mb-3">
 					Registrarse
 				</a>
+				</div>
 			</form>
 		</div>
 	);

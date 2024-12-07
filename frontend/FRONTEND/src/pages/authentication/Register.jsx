@@ -101,7 +101,7 @@ export default function Register() {
 				<CardHeader className="flex flex-col items-center px-6 py-4">
 					<h1 className="text-2xl font-bold text-blue-600">Registro</h1>
 					<p className="text-blue-500">
-						Regístrate para conectarte con proveedores o compradores.
+						Regístrate para conectarte con vendedores o compradores.
 					</p>
 				</CardHeader>
 				<CardBody>
@@ -114,7 +114,7 @@ export default function Register() {
 							value={userData.nombre}
 							onChange={handleInputChange}
 							required
-							className="bg-white"
+							className="text-black"
 						/>
 
 						<Select
@@ -126,7 +126,7 @@ export default function Register() {
 							className="bg-gray-100 "
 						>
 							{ROLES.map((tipo, index) => (
-								<SelectItem className="bg-pink text-black hover:bg-gray-700" key={index} value={tipo}>
+								<SelectItem className="text-black hover:bg-gray-700" key={index} value={tipo}>
 									{typeof tipo === 'string'
 										? tipo.charAt(0).toUpperCase() + tipo.slice(1)
 										: tipo}
@@ -136,12 +136,13 @@ export default function Register() {
 
 						<Input
 							label="Telefono"
+							type='number'
 							name="telefono"
 							placeholder="Ej: 3333333333"
 							value={userData.telefono}
 							onChange={handleInputChange}
 							required
-							className="bg-white-100"
+							className="text-black"
 						/>
 
 						<Input
@@ -151,17 +152,18 @@ export default function Register() {
 							value={userData.correo}
 							onChange={handleInputChange}
 							required
-							className="bg-white-100"
+							className="text-black"
 						/>
 
 						<Input
 							label="Contraseña"
 							name="contraseña"
+							type='password'
 							placeholder="*******"
 							value={userData.contraseña}
 							onChange={handleInputChange}
 							required
-							className="bg-white-100"
+							className="text-black"
 						/>
 
 						<Input
@@ -170,7 +172,7 @@ export default function Register() {
 							placeholder="Agregue una descripción de su perfil y sus productos o compras..."
 							value={userData.descripcion}
 							onChange={handleInputChange}
-							className="bg-white-100"
+							className="text-black"
 						/>
 
 						<div className="flex flex-row items-center justify-center bg-gray-100">
