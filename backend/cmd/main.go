@@ -34,6 +34,7 @@ func main() {
 		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS", // Métodos HTTP permitidos
 	}))
 	// Configura las rutas
+<<<<<<< HEAD
 	app.Get("/", func(c *fiber.Ctx) error {
 
 		return c.SendString("¡Probando si funciona la automatización (3)")
@@ -41,6 +42,12 @@ func main() {
 
 	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
 	err := app.Listen("0.0.0.0:10000")
+=======
+	routes.SetupRoutes(app) // Llama a la función que configura las rutas
+
+	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
+	err := app.Listen("192.168.1.107:8080") // Cambié el puerto a 8080
+>>>>>>> frontendV2
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}

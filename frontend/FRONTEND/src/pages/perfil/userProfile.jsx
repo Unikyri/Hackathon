@@ -1,13 +1,13 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const UserProfile = () => {
+export const UserProfile = () => {
   const { name } = useParams();
 
   return (
-    <div style={styles.container}>
-      <h1>Perfil de {name}</h1>
-      <p>Información detallada del usuario aparecerá aquí.</p>
+    <div className='pd-16 bg-gray-50 border-r-8'>
+      <h1 className='bg-blue'>Perfil de {name}</h1>
+      <p className='color-black'>Información detallada del usuario aparecerá aquí.</p>
     </div>
   );
 };
