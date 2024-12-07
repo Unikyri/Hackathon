@@ -12,7 +12,7 @@ import (
 // CrearPublicacion maneja la creación de una nueva publicación para un usuario
 func CrearPublicacion(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario en la URL
-	idUsuarioStr := c.Params("id") // Obtener el ID del usuario como string desde la URL
+	idUsuarioStr := c.Query("id") // Obtener el ID del usuario como string desde la URL
 
 	// Convertir el ID del usuario de string a uint
 	idUsuario, err := strconv.ParseUint(idUsuarioStr, 10, 32) // Convertimos a uint
@@ -64,7 +64,7 @@ func CrearPublicacion(c *fiber.Ctx) error {
 // BorrarPublicacion elimina una publicación según su ID
 func BorrarPublicacion(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID de la publicación desde la URL
-	idPublicacionStr := c.Params("id") // Obtener el ID de la publicación como string
+	idPublicacionStr := c.Query("id") // Obtener el ID de la publicación como string
 
 	// Convertir el ID de la publicación de string a uint
 	idPublicacion, err := strconv.ParseUint(idPublicacionStr, 10, 32) // Convertir el ID
