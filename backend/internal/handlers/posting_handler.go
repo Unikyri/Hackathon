@@ -26,6 +26,8 @@ func CrearPublicacion(c *fiber.Ctx) error {
 	// Estructura para recibir el texto de la publicación
 	type Request struct {
 		Publicacion string `json:"publicacion"` // Texto de la publicación
+		Categoria   string `json:"categoria"`
+		Foto        []byte `json:"foto"`
 	}
 
 	// Parsear el cuerpo de la solicitud para obtener el texto de la publicación
@@ -41,6 +43,8 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		UsuarioID:   uint(idUsuario), // Usar el ID convertido a uint
 		Publicacion: req.Publicacion,
 		Fecha:       time.Now(), // Fecha actual
+		Categoria:   req.Categoria,
+		Foto:        req.Foto,
 	}
 
 	// Guardar la nueva publicación en la base de datos
