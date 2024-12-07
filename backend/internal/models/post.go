@@ -9,4 +9,6 @@ type Publicacion struct {
 	Usuario     Usuario   `gorm:"foreignKey:UsuarioID"`     // Relación con el modelo Usuario
 	Publicacion string    `gorm:"type:text;not null"`       // Contenido de la publicación
 	Fecha       time.Time `gorm:"not null"`                 // Fecha de la publicación
+	Categoria   string    `gorm:"not null"`                 // Categoría del producto
+	Foto        []byte    `gorm:"type:bytea"`
 }
