@@ -1,15 +1,32 @@
 import { BASE_URL } from "../environment";
 
-export const GetAccessToken = async ({ email, password }) => {
+export const RegisterUser = async ({
+    nombre,
+    contrasenia,
+    longitud,
+    latitud,
+    correo,
+    telefono,
+    rol,
+    foto,
+    descripcion,
+}) => {
     try {
-        const response = await fetch(`${BASE_URL}/autenticar/login`, {
+        const response = await fetch(`${BASE_URL}/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                correo: email,
-                contrasena: password,
+                nombre,
+                contrasenia,
+                longitud,
+                latitud,
+                correo,
+                telefono,
+                rol,
+                foto,
+                descripcion,
             }),
         });
 
@@ -17,42 +34,49 @@ export const GetAccessToken = async ({ email, password }) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Obtener el token como texto (JWT)
-        const token = await response.text();
-        console.log("JWT Token:", token);
+        const data = await response.json();
+        console.log("Usuario registrado:", data);
 
-        // Decodificar la carga útil (payload)
-        const payload = decodeJwtPayload(token);
-        console.log("Payload:", payload);
-
-        return { token, payload }; // Retornar el JWT y la carga útil
+        return data; // Retornar la respuesta del servidor
     } catch (error) {
-        console.error("Error obteniendo el token de acceso:", error);
+        console.error("Error registrando usuario:", error);
+        return null;
     }
 };
 
-// Función para decodificar la carga útil (payload) de un token JWT
-const decodeJwtPayload = (token) => {
+export const AuthenticateUser = async ({ correo, password }) => {
     try {
-        // Dividir el token en sus partes (header, payload, signature)
-        const parts = token.split(".");
-        if (parts.length !== 3) {
-            throw new Error("Invalid JWT format");
+        const response = await fetch(`${BASE_URL}/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                correo,
+                password,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Decodificar la carga útil (segunda parte del token)
-        const base64Url = parts[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-            atob(base64)
-                .split("")
-                .map((c) => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
-                .join("")
-        );
+        // Obtener la respuesta JSON que contiene el mensaje, rol y usuario
+        const data = await response.json();
 
-        return JSON.parse(jsonPayload); // Convertir a objeto JavaScript
+        if (data.message === "inicio de sesión exitoso") {
+            console.log("Usuario autenticado:", data);
+            return {
+                success: true,
+                user: data.user,
+                role: data.rol,
+            };
+        } else {
+            console.error("Error en la autenticación:", data.message);
+            return { success: false, message: data.message };
+        }
     } catch (error) {
-        console.error("Error decodificando el JWT:", error);
-        return null;
+        console.error("Error autenticando usuario:", error);
+        return { success: false, message: "Hubo un error al autenticar al usuario" };
     }
 };

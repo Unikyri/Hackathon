@@ -27,6 +27,7 @@ func SetupRoutes(app *fiber.App) {
 	app.Post("/register", handlers.Register)
 	app.Post("/login", handlers.Login)
 
+<<<<<<< HEAD
 	// Visualización de interfaz
 	app.Get("/userVisualizer", handlers.VisualizarUsuarios)
 	app.Get("/profileVisualizer", handlers.ObtenerInfoUsuario)
@@ -35,8 +36,22 @@ func SetupRoutes(app *fiber.App) {
 	// Editar información del perfil
 	app.Post("/profileEdition/changePicture", handlers.CambiarFotoUsuario)
 	app.Post("/profileEdition/changeDescription", handlers.ModificarDescripcion)
+=======
+	//Visualizacion de interfaz
+	app.Get("/userMap/:id", handlers.VisualizarUsuarios)
+	app.Get("/profile/:id", handlers.ObtenerInfoUsuario)
+	app.Get("/user/:id/favorites", handlers.ObtenerFavoritos)
+
+	//Editar información del perfil
+	app.Post("/user/:id/changePicture", handlers.CambiarFotoUsuario)
+	app.Post("/user/:id/changeDescription", handlers.ModificarDescripcion)
+>>>>>>> frontend
 
 	//Gestionar publicaciones
 	app.Post("/postCreation", handlers.CrearPublicacion)
 	app.Get("/postDelete", handlers.BorrarPublicacion)
+
+	//Manejar los favoritos
+	app.Post("/favorites/:id/:favorito_id", handlers.AgregarFavorito)
+	app.Delete("/favorites/:id/:favorito_id", handlers.RemoverFavorito)
 }
