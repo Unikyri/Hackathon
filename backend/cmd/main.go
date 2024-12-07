@@ -3,12 +3,13 @@ package main
 import (
 	"Hackathon/db"
 	"Hackathon/internal/routes" // Importa el paquete donde tienes las rutas
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	_ "github.com/lib/pq"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -26,7 +27,12 @@ func main() {
 
 	// Inicializa el servidor Fiber
 	app := fiber.New()
-	app.Use(cors.New())
+	// Habilita CORS
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://192.168.56.1:5173", // Permite solo tu frontend local
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS", // Métodos HTTP permitidos
+	}))
 	// Configura las rutas
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
