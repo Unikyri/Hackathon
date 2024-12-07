@@ -3,11 +3,11 @@ package handlers
 import (
 	"Hackathon/db"
 	"Hackathon/internal/models"
+	"encoding/base64"
 	"github.com/gofiber/fiber/v2"
 	"log"
 	"strconv"
 	"time"
-	"encoding/base64"
 )
 
 // CrearPublicacion maneja la creación de una nueva publicación para un usuario
