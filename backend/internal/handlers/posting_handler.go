@@ -3,16 +3,17 @@ package handlers
 import (
 	"Hackathon/db"
 	"Hackathon/internal/models"
-	"github.com/gofiber/fiber/v2"
 	"log"
 	"strconv"
 	"time"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 // CrearPublicacion maneja la creación de una nueva publicación para un usuario
 func CrearPublicacion(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario en la URL
-	idUsuarioStr := c.Params("id") // Obtener el ID del usuario como string desde la URL
+	idUsuarioStr := c.Query("id") // Obtener el ID del usuario como string desde la URL
 
 	// Convertir el ID del usuario de string a uint
 	idUsuario, err := strconv.ParseUint(idUsuarioStr, 10, 32) // Convertimos a uint
@@ -26,11 +27,8 @@ func CrearPublicacion(c *fiber.Ctx) error {
 	// Estructura para recibir el texto de la publicación
 	type Request struct {
 		Publicacion string `json:"publicacion"` // Texto de la publicación
-<<<<<<< HEAD
 		Categoria   string `json:"categoria"`
 		Foto        []byte `json:"foto"`
-=======
->>>>>>> frontendV2
 	}
 
 	// Parsear el cuerpo de la solicitud para obtener el texto de la publicación
@@ -46,11 +44,8 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		UsuarioID:   uint(idUsuario), // Usar el ID convertido a uint
 		Publicacion: req.Publicacion,
 		Fecha:       time.Now(), // Fecha actual
-<<<<<<< HEAD
 		Categoria:   req.Categoria,
 		Foto:        req.Foto,
-=======
->>>>>>> frontendV2
 	}
 
 	// Guardar la nueva publicación en la base de datos
@@ -70,7 +65,7 @@ func CrearPublicacion(c *fiber.Ctx) error {
 // BorrarPublicacion elimina una publicación según su ID
 func BorrarPublicacion(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID de la publicación desde la URL
-	idPublicacionStr := c.Params("id") // Obtener el ID de la publicación como string
+	idPublicacionStr := c.Query("id") // Obtener el ID de la publicación como string
 
 	// Convertir el ID de la publicación de string a uint
 	idPublicacion, err := strconv.ParseUint(idPublicacionStr, 10, 32) // Convertir el ID
