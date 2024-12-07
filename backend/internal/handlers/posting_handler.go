@@ -7,6 +7,7 @@ import (
 	"log"
 	"strconv"
 	"time"
+	"encoding/base64"
 )
 
 // CrearPublicacion maneja la creación de una nueva publicación para un usuario
@@ -33,17 +34,31 @@ func CrearPublicacion(c *fiber.Ctx) error {
 	// Parsear el cuerpo de la solicitud para obtener el texto de la publicación
 	var req Request
 	if err := c.BodyParser(&req); err != nil {
+		log.Println("Error al parsear los datos de la solicitud:", err)
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Datos inválidos",
 		})
 	}
 
+	// Validar que la publicación no esté vacía
+	if req.Publicacion == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "El texto de la publicación no puede estar vacío",
+		})
+	}
+
+	// Inicializar la variable foto
 	var foto []byte
+
+	// Si se proporcionó una foto, decodificarla de Base64
 	if req.Foto != nil && *req.Foto != "" {
-		// Decodificar la foto en Base64 si no está vacía
-		foto = []byte(*req.Foto) // Aquí podrías agregar la lógica para convertir Base64 a []byte si fuera necesario
-	} else {
-		foto = nil
+		foto, err = base64.StdEncoding.DecodeString(*req.Foto)
+		if err != nil {
+			log.Println("Error al decodificar la foto Base64:", err)
+			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+				"error": "Error al procesar la foto",
+			})
+		}
 	}
 
 	// Crear la nueva publicación
@@ -52,20 +67,21 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		Publicacion: req.Publicacion,
 		Fecha:       time.Now(), // Fecha actual
 		Categoria:   req.Categoria,
-		Foto:        foto,
+		Foto:        foto, // Asignar la foto decodificada
 	}
 
-	// Guardar la nueva publicación en la base de datos
+	// Guardar la publicación en la base de datos
 	if err := db.DB.Create(&publicacion).Error; err != nil {
+		log.Println("Error al guardar la publicación:", err)
 		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "Error al guardar la publicación",
 		})
 	}
 
-	// Responder con éxito y devolver la publicación creada
-	return c.JSON(fiber.Map{
-		"message":     "Publicación creada exitosamente",
-		"publicacion": publicacion,
+	// Responder con éxito
+	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
+		"message": "Publicación creada exitosamente",
+		"id":      publicacion.ID,
 	})
 }
 
