@@ -9,8 +9,8 @@ import (
 // AgregarFavorito agrega un usuario a la lista de favoritos de otro usuario.
 func AgregarFavorito(c *fiber.Ctx) error {
 	// Parámetros de entrada: IDs del usuario y el favorito
-	idUsuario := c.Params("id")           // El ID del usuario que agrega al favorito
-	idFavorito := c.Params("favorito_id") // El ID del usuario que será agregado a favoritos
+	idUsuario := c.Query("id")           // El ID del usuario que agrega al favorito
+	idFavorito := c.Query("favorito_id") // El ID del usuario que será agregado a favoritos
 
 	// Buscar el usuario que realiza la acción
 	var usuario models.Usuario
@@ -51,8 +51,8 @@ func AgregarFavorito(c *fiber.Ctx) error {
 // RemoverFavorito elimina un usuario de la lista de favoritos de otro usuario.
 func RemoverFavorito(c *fiber.Ctx) error {
 	// Parámetros de entrada: IDs del usuario y el favorito
-	idUsuario := c.Params("id")           // El ID del usuario que remueve el favorito
-	idFavorito := c.Params("favorito_id") // El ID del usuario que será removido de favoritos
+	idUsuario := c.Query("id")           // El ID del usuario que remueve el favorito
+	idFavorito := c.Query("favorito_id") // El ID del usuario que será removido de favoritos
 
 	// Buscar el usuario que realiza la acción
 	var usuario models.Usuario

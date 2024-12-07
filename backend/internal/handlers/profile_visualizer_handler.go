@@ -13,6 +13,7 @@ import (
 func ObtenerInfoUsuario(c *fiber.Ctx) error {
 <<<<<<< HEAD
 	// Parámetro de entrada: ID del usuario
+<<<<<<< HEAD
 	usuarioID := c.Params("id") // Obtener el ID del usuario desde la URL
 =======
 	// Parámetro de entrada: nombre del usuario
@@ -27,6 +28,9 @@ func ObtenerInfoUsuario(c *fiber.Ctx) error {
 		})
 	}
 >>>>>>> frontendV2
+=======
+	usuarioID := c.Query("id") // Obtener el ID del usuario desde la URL
+>>>>>>> 47c519d9ab3d112a263eaa040ef9b0c823f81b60
 
 	// Obtener el parámetro de categoría (opcional)
 	categoria := c.Query("categoria") // Leer el parámetro de categoría desde la query string

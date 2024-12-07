@@ -8,7 +8,7 @@ import (
 
 func VisualizarUsuarios(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
-	id := c.Params("id") // Obtener el ID del usuario desde la URL
+	id := c.Query("id") // Obtener el ID del usuario desde la URL
 
 	// Obtener el parámetro de categoría (opcional)
 	categoria := c.Query("categoria") // Leer el parámetro de categoría desde la query string
@@ -23,7 +23,7 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 
 	// Inicializar la consulta para obtener usuarios con el mismo rol que el usuario que realiza la consulta
 	var usuariosConRol []models.Usuario
-	query := db.DB.Where("rol = ?", usuario.Rol)
+	query := db.DB.Where("rol <> ?", usuario.Rol)
 
 	// Si se proporciona una categoría, filtrar las publicaciones de los usuarios
 	if categoria != "" {
