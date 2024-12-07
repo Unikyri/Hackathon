@@ -2,11 +2,14 @@ package main
 
 import (
 	"Hackathon/db"
-	"github.com/gofiber/fiber/v2" // Asumiendo que estás usando Fiber v2
-	_ "github.com/lib/pq"
+	"Hackathon/internal/routes" // Importa el paquete donde tienes las rutas
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -14,24 +17,30 @@ func main() {
 	db.InitDB()
 	defer db.CerrarDB()
 
+	// Habilita CORS
 	// Ejecuta las migraciones
 	if err := runMigrations(); err != nil {
 		log.Fatalf("Error al ejecutar migraciones: %v\n", err)
 	}
 
-	log.Println("Servidor listo para iniciar...")
+	log.Println("Servidor listo para iniciar y desplegado...")
 
 	// Inicializa el servidor Fiber
 	app := fiber.New()
-
+	// Habilita CORS
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://192.168.1.11:5173", // Permite solo tu frontend local
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS", // Métodos HTTP permitidos
+	}))
 	// Configura las rutas
 	app.Get("/", func(c *fiber.Ctx) error {
 
 		return c.SendString("¡Probando si funciona la automatización (3)")
 
 
-	// Inicia el servidor en la IP externa (0.0.0.0) y puerto 10000
-	err := app.Listen(":10000") // Aquí puedes cambiar el puerto si es necesario
+	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
+	err := app.Listen("0.0.0.0:10000")
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}
