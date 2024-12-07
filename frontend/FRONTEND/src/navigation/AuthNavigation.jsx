@@ -1,5 +1,5 @@
 import Login from "../pages/authentication/Login";
-import Register from "../pages/authentication/RegisterPage";
+import Register from "../pages/authentication/Register";
 import Home from "../pages/home/Home";
 import DeniedPage from "../pages/other/Denied";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

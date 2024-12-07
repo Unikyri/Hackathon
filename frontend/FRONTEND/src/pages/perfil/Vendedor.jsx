@@ -10,7 +10,7 @@ export const Vendedor = () => {
   return (
     <Layout>
       <div className="h-full">
-      {userRole === 'vendedor' ? (
+      {userRole === 'comprador' ? (
         <VendedorPerfil />
       ):(
         <VendedorHome /> //Mostrar VendedorPerfil solo si el rol es 'Vendedor'

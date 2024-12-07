@@ -1,5 +1,4 @@
 const MainLayout = ({ children }) => {
-
     console.log("MainLayout");
 
     return (

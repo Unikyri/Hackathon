@@ -39,16 +39,16 @@ export default function Login() {
 				// Redirigir según el rol
 				switch (role) {
 					case 'administrador':
-						navigate('/admin');
+						navigate("/admin");
 						break;
 					case 'comprador':
-						navigate('/home');
+						navigate("/home");
 						break;
 					case 'vendedor':
-						navigate('/home');
+						navigate("/home");
 						break;
 					default:
-						navigate('/home');
+						navigate("/");
 						break;
 				}
 			} else {
