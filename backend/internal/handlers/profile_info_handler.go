@@ -11,7 +11,7 @@ import (
 // Si no se proporciona una foto, la elimina (pone la foto como NULL).
 func CambiarFotoUsuario(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
-	id := c.Params("id") // Obtener el ID del usuario desde la URL
+	id := c.Query("id") // Obtener el ID del usuario desde la URL
 
 	// Estructura para recibir el cuerpo de la solicitud (Base64 de la foto)
 	type Request struct {
@@ -71,7 +71,7 @@ func CambiarFotoUsuario(c *fiber.Ctx) error {
 // ModificarDescripcion recibe el ID de un usuario y la nueva descripción para actualizarla en la base de datos.
 func ModificarDescripcion(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
-	id := c.Params("id") // Obtener el ID del usuario desde la URL
+	id := c.Query("id") // Obtener el ID del usuario desde la URL
 
 	// Estructura para recibir la nueva descripción
 	type Request struct {
