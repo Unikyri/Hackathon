@@ -9,7 +9,7 @@ import (
 // ObtenerFavoritos recibe el ID de un usuario y retorna los ID, nombre y foto de los usuarios favoritos.
 func ObtenerFavoritos(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
-	idUsuario := c.Params("id") // Obtener el ID del usuario desde la URL
+	idUsuario := c.Query("id") // Obtener el ID del usuario desde la URL
 
 	// Buscar los favoritos del usuario
 	var favoritos []models.Favoritos

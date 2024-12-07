@@ -8,7 +8,7 @@ import (
 
 func VisualizarUsuarios(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
-	id := c.Params("id") // Obtener el ID del usuario desde la URL
+	id := c.Query("id") // Obtener el ID del usuario desde la URL
 
 	// Obtener el parámetro de categoría (opcional)
 	categoria := c.Query("categoria") // Leer el parámetro de categoría desde la query string

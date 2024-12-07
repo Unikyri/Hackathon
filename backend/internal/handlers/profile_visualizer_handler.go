@@ -10,7 +10,7 @@ import (
 // incluyendo las calificaciones y las publicaciones (filtradas por categoría si se pasa como parámetro).
 func ObtenerInfoUsuario(c *fiber.Ctx) error {
 	// Parámetro de entrada: ID del usuario
-	usuarioID := c.Params("id") // Obtener el ID del usuario desde la URL
+	usuarioID := c.Query("id") // Obtener el ID del usuario desde la URL
 
 	// Obtener el parámetro de categoría (opcional)
 	categoria := c.Query("categoria") // Leer el parámetro de categoría desde la query string
