@@ -10,3 +10,7 @@ type Calificacion struct {
 	Reseniador   Usuario `gorm:"foreignKey:ReseniadorID"`  // Relación con el modelo Usuario (reseniador)
 	Reseniado    Usuario `gorm:"foreignKey:ReseniadoID"`   // Relación con el modelo Usuario (reseniado)
 }
+
+func (Calificacion) TableName() string {
+	return "calificaciones" // Aquí le indicamos a GORM que la tabla se llama "publicaciones"
+}

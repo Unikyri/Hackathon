@@ -12,3 +12,7 @@ type Publicacion struct {
 	Categoria   string    `gorm:"not null"`                 // Categoría del producto
 	Foto        []byte    `gorm:"type:bytea"`
 }
+
+func (Publicacion) TableName() string {
+	return "publicaciones" // Aquí le indicamos a GORM que la tabla se llama "publicaciones"
+}

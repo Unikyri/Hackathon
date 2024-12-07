@@ -13,3 +13,7 @@ type Usuario struct {
 	Rol         string  `gorm:"not null"`                 // Rol no nulo
 	Descripcion string  `gorm:"type:text"`                // Descripción como texto (puede ser largo)
 }
+
+func (Usuario) TableName() string {
+	return "usuarios" // Aquí le indicamos a GORM que la tabla se llama "publicaciones"
+}

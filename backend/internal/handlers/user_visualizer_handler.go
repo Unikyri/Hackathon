@@ -27,14 +27,24 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 		})
 	}
 
-	// Inicializar la consulta para obtener usuarios con el mismo rol que el usuario que realiza la consulta
+	// Inicializar la consulta para obtener usuarios
 	var usuariosConRol []models.Usuario
-	query := db.DB.Where("rol <> ?", usuario.Rol)
+	query := db.DB
 
-	// Si se proporciona una categoría, filtrar las publicaciones de los usuarios
-	if categoria != "" {
-		// Buscar usuarios cuyo rol sea el mismo y que tengan publicaciones con la categoría especificada
-		query = query.Where("id IN (?)", db.DB.Model(&models.Publicacion{}).Select("usuario_id").Where("categoria = ?", categoria))
+	// Si el usuario es un administrador, puede ver a todos los usuarios
+	if usuario.Rol == "administrador" {
+		// Si se proporciona una categoría, filtrar las publicaciones de los usuarios
+		if categoria != "" {
+			query = query.Where("id IN (?)", db.DB.Model(&models.Publicacion{}).Select("usuario_id").Where("categoria = ?", categoria))
+		}
+	} else {
+		// Si no es administrador, solo puede ver usuarios que no son de su rol ni administradores
+		query = query.Where("rol != ? AND rol != ?", usuario.Rol, "administrador")
+
+		// Si se proporciona una categoría, filtrar las publicaciones de los usuarios
+		if categoria != "" {
+			query = query.Where("id IN (?)", db.DB.Model(&models.Publicacion{}).Select("usuario_id").Where("categoria = ?", categoria))
+		}
 	}
 
 	// Ejecutar la consulta para obtener los usuarios
@@ -44,23 +54,8 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 		})
 	}
 
-	// Si no se encontraron usuarios, devolver una respuesta vacía o un mensaje
-	if len(usuariosConRol) == 0 {
-		return c.Status(fiber.StatusOK).JSON(fiber.Map{
-			"mensaje":  "No se encontraron usuarios con los criterios especificados",
-			"usuarios": []models.Usuario{},
-		})
-	}
-
-	// Responder con los usuarios y la ubicación del usuario que hizo la solicitud
-	response := fiber.Map{
-		"ubicacion_usuario": map[string]float64{
-			"latitud":  usuario.Latitud,
-			"longitud": usuario.Longitud,
-		},
+	// Responder con los usuarios
+	return c.JSON(fiber.Map{
 		"usuarios": usuariosConRol,
-	}
-
-	// Devolver la respuesta
-	return c.JSON(response)
+	})
 }
