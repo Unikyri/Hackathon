@@ -59,29 +59,6 @@ export default function RegisterPage() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-<<<<<<< HEAD
-	
-		const { nombre, rol, telefono, correo, contraseña, imagen, descripcion } = userData;
-		const { latitude, longitude } = coordinates;
-	
-		// Llamada al servicio RegisterUser
-		const response = await RegisterUser({
-		  nombre,
-		  contrasenia: contraseña,
-		  longitud: longitude,
-		  latitud: latitude,
-		  correo,
-		  telefono,
-		  rol,
-		  foto: imagen, // Asegúrate de manejar la foto si la subes
-		  descripcion
-		});
-	
-		if (response) {
-		  alert('Registro exitoso: ' + response.message);
-		} else {
-		  alert('Error al registrar el usuario.');
-=======
 
 		const { nombre, rol, telefono, correo, contraseña, latitude, longitude, imagen, descripcion } = userData;
 
@@ -116,7 +93,6 @@ export default function RegisterPage() {
 			}
 		} catch (error) {
 			console.error('Error de red', error);
->>>>>>> frontendV2
 		}
 	  };
 
@@ -150,13 +126,8 @@ export default function RegisterPage() {
 							required
 							className="bg-gray-100 "
 						>
-<<<<<<< HEAD
-							{roles.map((tipo, index) => (
-								<SelectItem className=' bg-pink text-black hover:bg-gray-700' key={index} value={tipo}>
-=======
 							{ROLES.map((tipo, index) => (
 								<SelectItem className=' bg-pink hover:bg-gray-700' key={index} value={tipo}>
->>>>>>> frontendV2
 									{tipo.charAt(0).toUpperCase() + tipo.slice(1)}
 								</SelectItem>
 							))}
