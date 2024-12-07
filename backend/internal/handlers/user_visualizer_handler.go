@@ -34,13 +34,13 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 	// Si el usuario es un administrador, puede ver a todos los usuarios
 	if usuario.Rol == "administrador" {
 		// Si se proporciona una categoría, filtrar las publicaciones de los usuarios
+		query = query.Where("rol != ?", "administrador")
 		if categoria != "" {
 			query = query.Where("id IN (?)", db.DB.Model(&models.Publicacion{}).Select("usuario_id").Where("categoria = ?", categoria))
 		}
 	} else {
-		// Si no es administrador, solo puede ver usuarios que no son de su rol ni administradores
+		// Si el usuario no es administrador, no debe ver usuarios con el mismo rol ni administradores
 		query = query.Where("rol != ? AND rol != ?", usuario.Rol, "administrador")
-
 		// Si se proporciona una categoría, filtrar las publicaciones de los usuarios
 		if categoria != "" {
 			query = query.Where("id IN (?)", db.DB.Model(&models.Publicacion{}).Select("usuario_id").Where("categoria = ?", categoria))
@@ -54,8 +54,15 @@ func VisualizarUsuarios(c *fiber.Ctx) error {
 		})
 	}
 
-	// Responder con los usuarios
-	return c.JSON(fiber.Map{
+	// Responder con los usuarios y la ubicación del usuario que hizo la solicitud
+	response := fiber.Map{
+		"ubicacion_usuario": map[string]float64{
+			"latitud":  usuario.Latitud,
+			"longitud": usuario.Longitud,
+		},
 		"usuarios": usuariosConRol,
-	})
+	}
+
+	// Retornar la respuesta
+	return c.JSON(response)
 }
