@@ -25,9 +25,9 @@ func CrearPublicacion(c *fiber.Ctx) error {
 
 	// Estructura para recibir el texto de la publicación
 	type Request struct {
-		Publicacion string `json:"publicacion"` // Texto de la publicación
-		Categoria   string `json:"categoria"`
-		Foto        []byte `json:"foto"`
+		Publicacion string  `json:"publicacion"` // Texto de la publicación
+		Categoria   string  `json:"categoria"`
+		Foto        *string `json:"foto"` // Usar un puntero a string para permitir null o vacío
 	}
 
 	// Parsear el cuerpo de la solicitud para obtener el texto de la publicación
@@ -38,13 +38,21 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		})
 	}
 
+	var foto []byte
+	if req.Foto != nil && *req.Foto != "" {
+		// Decodificar la foto en Base64 si no está vacía
+		foto = []byte(*req.Foto) // Aquí podrías agregar la lógica para convertir Base64 a []byte si fuera necesario
+	} else {
+		foto = nil
+	}
+
 	// Crear la nueva publicación
 	publicacion := models.Publicacion{
 		UsuarioID:   uint(idUsuario), // Usar el ID convertido a uint
 		Publicacion: req.Publicacion,
 		Fecha:       time.Now(), // Fecha actual
 		Categoria:   req.Categoria,
-		Foto:        req.Foto,
+		Foto:        foto,
 	}
 
 	// Guardar la nueva publicación en la base de datos
@@ -54,9 +62,9 @@ func CrearPublicacion(c *fiber.Ctx) error {
 		})
 	}
 
-	// Retornar una respuesta de éxito
-	return c.Status(fiber.StatusCreated).JSON(fiber.Map{
-		"message":     "Publicación creada con éxito",
+	// Responder con éxito y devolver la publicación creada
+	return c.JSON(fiber.Map{
+		"message":     "Publicación creada exitosamente",
 		"publicacion": publicacion,
 	})
 }

@@ -20,6 +20,13 @@ func AgregarFavorito(c *fiber.Ctx) error {
 		})
 	}
 
+	var usuarioFavorito models.Usuario
+	if err := db.DB.Where("id = ?", idFavorito).First(&usuarioFavorito).Error; err != nil {
+		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+			"error": "Usuario favorito no encontrado",
+		})
+	}
+
 	// Verificar si el usuario favorito ya está agregado a los favoritos
 	var favorito models.Favoritos
 	if err := db.DB.Where("usuario_id = ? AND usuario_favorito_id = ?", idUsuario, idFavorito).First(&favorito).Error; err == nil {
@@ -32,7 +39,7 @@ func AgregarFavorito(c *fiber.Ctx) error {
 	// Crear la relación de favorito
 	nuevoFavorito := models.Favoritos{
 		UsuarioID:         usuario.ID,
-		UsuarioFavoritoID: favorito.ID,
+		UsuarioFavoritoID: usuarioFavorito.ID,
 	}
 
 	// Guardar la relación en la base de datos
