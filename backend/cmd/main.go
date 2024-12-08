@@ -36,8 +36,12 @@ func main() {
 	// Configura las rutas
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
-	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 8080
-	err := app.Listen("0.0.0.0:10000")
+	// Ruta del certificado TLS
+	certPath := "./cert.pem"
+	keyPath := "./key.pem"
+
+	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 443 con TLS
+	err := app.ListenTLS("0.0.0.0:10000", certPath, keyPath)
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}
