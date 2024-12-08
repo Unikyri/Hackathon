@@ -37,8 +37,8 @@ func main() {
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
 	// Ruta del certificado TLS
-	certPath := "./cert.pem"
-	keyPath := "./key.pem"
+	certPath := "/home/jeaqhbo/Hackathon/backend/cmd/cert.pem"
+	keyPath := "/home/jeaqhbo/Hackathon/backend/cmd/key.pem"
 
 	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 443 con TLS
 	err := app.ListenTLS("0.0.0.0:10000", certPath, keyPath)
