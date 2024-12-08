@@ -29,7 +29,7 @@ func main() {
 	app := fiber.New()
 	// Habilita CORS
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*", // Agrega ambas IPs
+		AllowOrigins: "*", // Permite todas las orígenes
 		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS", // Métodos HTTP permitidos
 	}))
@@ -37,11 +37,11 @@ func main() {
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
 	// Ruta del certificado TLS
-	certPath := "/home/jeaqhbo/Hackathon/backend/cmd/cert.pem"
-	keyPath := "/home/jeaqhbo/Hackathon/backend/cmd/key.pem"
+	certPath := "/etc/letsencrypt/live/backend.meaeting.tech/fullchain.pem"
+	keyPath := "/etc/letsencrypt/live/backend.meaeting.tech/privkey.pem"
 
-	// Inicia el servidor en la IP externa (192.168.140.128) y puerto 443 con TLS
-	err := app.ListenTLS("0.0.0.0:10000", certPath, keyPath)
+	// Inicia el servidor en el puerto 10000 con TLS
+	err := app.ListenTLS(":10000", certPath, keyPath) // Aquí especificamos el puerto 10000
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}
