@@ -1,4 +1,7 @@
 import React, { useContext } from 'react';
+import {
+	Link,
+} from '@nextui-org/react';
 import { UserContext } from '../../providers/UserProvider';
 
 export default function Navbar() {
@@ -19,7 +22,12 @@ export default function Navbar() {
       </button>
 
       {/* Espacio para otros elementos del Navbar */}
-      <div className="flex-grow"></div>
+      <Link href="/home">
+        <div className="flex items-center justify-center gap-4">
+          <img src="./logo-web.png" className="w-16" />
+        </div>
+      </Link>
+      <div></div>
     </nav>
   );
 }

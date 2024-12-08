@@ -115,7 +115,7 @@ export default function Login() {
 				<h2 className="text-2xl font-semibold text-center text-black mb-3">
 					¿No tiene cuenta?
 				</h2>
-				<a href="/Register" className="text-center mb-3">
+				<a href="/Register" className="text-center mb-3 text-gray hover:text-blue-500">
 					Registrarse
 				</a>
 				</div>

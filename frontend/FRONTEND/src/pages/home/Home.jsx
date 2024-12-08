@@ -41,11 +41,11 @@ const Home = () => {
           value={filtro}
           onChange={(e) => handleSelectChange('filtro', e.target.value)}
           required
-          className="bg-black-100 w-1/4"
+          className="text-black w-1/4"
         >
           {filtros.map((tipo, index) => (
             <SelectItem
-              className=" bg-red hover:bg-gray-700"
+              className="bg-gray-500 hover:bg-gray-700"
               key={index}
               value={tipo}
             >

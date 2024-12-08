@@ -10,30 +10,18 @@ import {
 
 export default function Header() {
 	return (
-		<Navbar className="bg-[#c41e3ae3]" maxWidth="full">
+		<Navbar className="bg-[#b2cef3e3]" maxWidth="full">
+		<NavbarContent className="flex justify-between">
 			<NavbarBrand>
-				<div className="flex items-center justify-center gap-4">
-					<img src="./logo.png" className="w-12 h-13" />
-					<span className="font-bold text-white text-lg">
-						Universidad de los Llanos
-					</span>
-				</div>
+				
 			</NavbarBrand>
-
-			<NavbarContent className="hidden sm:flex gap-4" justify="center">
+		</NavbarContent>
+			<NavbarContent className="hidden sm:flex gap-4" justify='center'>
 				<NavbarItem>
-					<Link href="/Map" className="text-white">
-						Inicio
-					</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link href="#" className="text-white">
-						Facultades
-					</Link>
-				</NavbarItem>
-				<NavbarItem>
-					<Link href="#" className="text-white">
-						Contacto
+					<Link href="/">
+						<div className="flex items-center justify-center gap-4">
+							<img src="./logo-name.PNG" className="w-36" />
+						</div>
 					</Link>
 				</NavbarItem>
 			</NavbarContent>
