@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Metadata } from "./Metadata";
 import { ProductosHome } from "./ProductosHome";
 import { PublicacionesHome } from "./PublicacionesHome";
+import { getUserPerfil } from "../../services/UserServices";
 
 const productosMock = [
   { id: 1, nombre: "Producto 1", precio: 99.99 },
@@ -11,15 +11,29 @@ const productosMock = [
   { id: 4, nombre: "Producto 4", precio: 199.99 },
 ];
 
-const publicacionesMock = [
-  { id: 1, titulo: "Publicación 1", contenido: "Contenido de la publicación 1." },
-  { id: 2, titulo: "Publicación 2", contenido: "Contenido de la publicación 2." },
-  { id: 3, titulo: "Publicación 3", contenido: "Contenido de la publicación 3." },
-];
-
 export default function VendedorHome() {
   const [productos, setProductos] = useState(productosMock);
-  const [publicaciones, setPublicaciones] = useState(publicacionesMock);
+  const [publicaciones, setPublicaciones] = useState([]);
+  const userId = 2; // Reemplaza con el ID del usuario actual.
+
+  // Carga las publicaciones al montar el componente
+  useEffect(() => {
+    const fetchUserPerfil = async () => {
+      try {
+        const data = await getUserPerfil(userId);
+        const publicacionesDelUsuario = data.publicaciones.map((pub) => ({
+          id: pub.ID,
+          titulo: pub.Titulo || "Título no disponible",
+          contenido: pub.Contenido || "Contenido no disponible",
+        }));
+        setPublicaciones(publicacionesDelUsuario);
+      } catch (error) {
+        console.error("Error al cargar el perfil del usuario:", error);
+      }
+    };
+
+    fetchUserPerfil();
+  }, [userId]);
 
   const agregarProducto = () => {
     const nuevoProducto = {
@@ -32,11 +46,11 @@ export default function VendedorHome() {
 
   const agregarPublicacion = () => {
     const nuevaPublicacion = {
-      id: publicaciones.length + 1, // Corregido a publicaciones en lugar de publicacion
-      titulo: `Publicación ${publicaciones.length + 1}`, // Cambié nombre a título
-      contenido: `Contenido de la publicación ${publicaciones.length + 1}`, // Cambié nombre a contenido
+      id: publicaciones.length + 1,
+      titulo: `Publicación ${publicaciones.length + 1}`,
+      contenido: `Contenido de la publicación ${publicaciones.length + 1}`,
     };
-    setPublicaciones([...publicaciones, nuevaPublicacion]); // Cambié publicacion a publicaciones
+    setPublicaciones([...publicaciones, nuevaPublicacion]);
   };
 
   const eliminarProducto = (id) => {
