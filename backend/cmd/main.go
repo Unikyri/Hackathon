@@ -37,7 +37,7 @@ func main() {
 	routes.SetupRoutes(app) // Llama a la función que configura las rutas
 
 	// Inicia el servidor en la IP externa (0.0.0.0) y puerto 443 (HTTPS)
-	err := app.ListenTLS("0.0.0.0:443", "/etc/letsencrypt/live/meaeting.tech/fullchain.pem", "/etc/letsencrypt/live/meaeting.tech/privkey.pem")
+	err := app.ListenTLS("0.0.0.0:10000", "/etc/letsencrypt/live/meaeting.tech/fullchain.pem", "/etc/letsencrypt/live/meaeting.tech/privkey.pem")
 	if err != nil {
 		log.Fatalf("Error al iniciar el servidor: %v\n", err)
 	}
