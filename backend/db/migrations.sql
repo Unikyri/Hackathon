@@ -1,3 +1,6 @@
+-- Borrar todos los registros de las tablas si existen
+TRUNCATE TABLE favoritos, calificaciones, publicaciones, usuarios CASCADE;
+
 -- Borrar las tablas existentes en orden correcto para evitar conflictos por las relaciones
 DROP TABLE IF EXISTS favoritos CASCADE;
 DROP TABLE IF EXISTS calificaciones CASCADE;
